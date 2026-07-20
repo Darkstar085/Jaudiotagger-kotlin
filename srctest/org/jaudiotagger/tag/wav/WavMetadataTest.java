@@ -1812,7 +1812,15 @@ public class WavMetadataTest extends AbstractTestCase
         Exception exceptionCaught = null;
         try
         {
+            File orig = new File("testdata", "test146.wav");
+            if (!orig.isFile())
+            {
+                System.err.println("Unable to test file - not available");
+                return;
+            }
+
             File testFile = AbstractTestCase.copyAudioToTmp("test146.wav", new File("test123ConvertId3.wav"));
+
             AudioFile f = AudioFileIO.read(testFile);
             System.out.println(f.getAudioHeader());
 
