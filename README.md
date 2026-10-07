@@ -1,39 +1,63 @@
 # Jaudiotagger
 
-Jaudiotagger is a Java library for reading and writing metadata in audio files.
+Jaudiotagger is an audio metadata library with a Kotlin Multiplatform implementation.
 
-It provides a common tagging API with format-specific implementations for formats
-such as MP3, FLAC, Ogg Vorbis, MP4, AIFF, WAV, WMA, and DSF.
+## Kotlin Multiplatform
 
-## Requirements
+The `jaudiotagger-kt` module provides the migrated Kotlin implementation for Android, JVM, iOS, and macOS. The format logic is shared through `commonMain`, with platform-specific random-access I/O behind `FileIo`.
 
-- Java 8 or newer for the current Maven build
-- Maven for building and testing
+Supported formats include MP3, FLAC, Ogg Vorbis, Ogg Opus, MP4/M4A, WAV, AIFF, WMA/ASF, Monkey's Audio, WavPack, DSF, DFF, and RealAudio.
 
-## Build
+### Build
 
-Run:
+Run the Kotlin test suite:
+
+```bash
+./gradlew :jaudiotagger-kt:jvmTest
+```
+
+Build the Android artifact:
+
+```bash
+./gradlew :jaudiotagger-kt:assembleRelease
+```
+
+Verify the common code remains JVM-free:
+
+```bash
+./gradlew :jaudiotagger-kt:compileKotlinMacosArm64
+```
+
+### Kotlin usage
+
+```kotlin
+import kotlinx.io.files.Path
+import org.jaudiotagger.kt.AudioTagger
+import org.jaudiotagger.kt.tag.FieldKey
+
+val file = AudioTagger.read(Path("/music/track.flac"))
+println(file.properties.duration)
+println(file.tag.first(FieldKey.ARTIST))
+
+file.tag.set(FieldKey.TITLE, "New title")
+AudioTagger.write(Path("/music/track.flac"), file.tag)
+```
+
+The Kotlin port avoids runtime reflection and routes file access through `FileIo`, allowing Android MediaStore/SAF files to be edited in place through `FileDescriptorIo`.
+
+## Java reference implementation
+
+The original Java implementation remains under `src/` as the compatibility and porting reference. Its Maven build and test suite are retained.
+
+Run the Java tests with:
 
 ```bash
 mvn clean test
 ```
 
-To build the library:
-
-```bash
-mvn clean package
-```
-
-## Project layout
-
-- `src` — library source code
-- `srctest` — unit and integration tests
-- `testdata` — audio files used by tests
-- `testtagdata` — metadata fixtures used by tests
-- `pom.xml` — Maven build configuration
-- `license.txt` — project license
+See `jaudiotagger-kt/PORTING.md` for the format-by-format migration status, intentional Kotlin differences, and known fixes.
 
 ## License
 
-Jaudiotagger is distributed under the GNU Lesser General Public License.
-See `license.txt` for details.
+Jaudiotagger is distributed under the GNU Lesser General Public License 2.1.
+See `license.txt`.
