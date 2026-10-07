@@ -1,0 +1,14 @@
+# JitPack build configuration.
+#
+# JitPack builders run Linux, which cannot compile the Apple (iOS/macOS)
+# Kotlin/Native targets, so only the Android, JVM and the multiplatform
+# metadata publications are built and published here. Apple consumers should
+# build from source or use a Mac-published repository.
+jdk:
+  - openjdk17
+install:
+  - ./gradlew
+    :jaudiotagger-kt:publishKotlinMultiplatformPublicationToMavenLocal
+    :jaudiotagger-kt:publishAndroidReleasePublicationToMavenLocal
+    :jaudiotagger-kt:publishJvmPublicationToMavenLocal
+    --no-daemon
