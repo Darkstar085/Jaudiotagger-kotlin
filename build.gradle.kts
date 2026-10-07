@@ -99,12 +99,6 @@ tasks.withType<KotlinNativeTest>().configureEach {
     environment("TESTDATA_DIR", testDataDir)
 }
 
-// Kotlin 2.4 registers prepareKotlinIdeaImport on modules; some IDE versions still
-// request prepareKotlinBuildScriptModel on subprojects (it lives on the root only).
-tasks.register("prepareKotlinBuildScriptModel") {
-    dependsOn(tasks.named("prepareKotlinIdeaImport"))
-}
-
 tasks.matching { it.name == "mergeDebugAndroidTestAssets" }.configureEach {
     dependsOn(syncAndroidTestAssets)
 }

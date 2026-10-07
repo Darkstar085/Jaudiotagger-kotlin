@@ -22,5 +22,5 @@ jobs:
       - name: Set up Gradle
         uses: gradle/actions/setup-gradle@v5
 
-      - name: Run Kotlin JVM tests
-        run: ./gradlew jvmTest --no-daemon
+      - name: Run Gradle build
+        run: ./gradlew build --no-daemon

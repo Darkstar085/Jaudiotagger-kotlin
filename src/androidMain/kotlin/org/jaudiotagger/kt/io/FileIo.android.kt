@@ -149,6 +149,6 @@ private inline fun <T> errnoAsIo(block: () -> T): T {
     try {
         return block()
     } catch (e: ErrnoException) {
-        throw e.rethrowAsIOException()
+        throw kotlinx.io.IOException(e.message ?: "Android I/O error")
     }
 }
