@@ -4,7 +4,7 @@ Jaudiotagger is an audio metadata library with a Kotlin Multiplatform implementa
 
 ## Kotlin Multiplatform
 
-The `jaudiotagger-kt` module is the active library implementation for Android, JVM, iOS, and macOS. Format logic is shared through `commonMain`, with platform-specific file I/O behind `FileIo`.
+The Kotlin Multiplatform implementation is the active library for Android, JVM, iOS, and macOS. Format logic is shared through `commonMain`, with platform-specific file I/O behind `FileIo`.
 
 Supported formats include MP3, FLAC, Ogg Vorbis, Ogg Opus, MP4/M4A, WAV, AIFF, WMA/ASF, Monkey's Audio, WavPack, DSF, DFF, and RealAudio.
 
@@ -13,19 +13,19 @@ Supported formats include MP3, FLAC, Ogg Vorbis, Ogg Opus, MP4/M4A, WAV, AIFF, W
 Run the JVM test suite:
 
 ```bash
-./gradlew :jaudiotagger-kt:jvmTest
+./gradlew jvmTest
 ```
 
 Build the Android artifact:
 
 ```bash
-./gradlew :jaudiotagger-kt:assembleRelease
+./gradlew assembleRelease
 ```
 
 Verify the common code remains JVM-free:
 
 ```bash
-./gradlew :jaudiotagger-kt:compileKotlinMacosArm64
+./gradlew compileKotlinMacosArm64
 ```
 
 ### Kotlin usage
@@ -47,11 +47,11 @@ The implementation avoids runtime reflection and routes file access through `Fil
 
 ## Project layout
 
-- `jaudiotagger-kt/src/commonMain` — shared Kotlin implementation
-- `jaudiotagger-kt/src/androidMain` — Android-specific I/O
-- `jaudiotagger-kt/src/jvmMain` — JVM-specific I/O
-- `jaudiotagger-kt/src/nativeMain` — native I/O
-- `jaudiotagger-kt/src/*Test` — Kotlin regression and platform tests
+- `src/commonMain` — shared Kotlin implementation
+- `src/androidMain` — Android-specific I/O
+- `src/jvmMain` — JVM-specific I/O
+- `src/nativeMain` — native I/O
+- `src/*Test` — Kotlin regression and platform tests
 - `testdata/` — audio samples used by the Kotlin test suite
 - `.github/workflows/manual-test.yml` — manual Kotlin verification workflow
 
@@ -60,4 +60,4 @@ The repository is Kotlin-first; the legacy Java implementation and Maven build h
 ## License
 
 Jaudiotagger is distributed under the GNU Lesser General Public License 2.1.
-See `license.txt`.
+See [LICENSE](LICENSE).
