@@ -1,0 +1,54 @@
+name: Publish to Maven Central
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+
+    env:
+      ORG_GRADLE_PROJECT_mavenCentralUsername: ${{ secrets.MAVEN_CENTRAL_USERNAME }}
+      ORG_GRADLE_PROJECT_mavenCentralPassword: ${{ secrets.MAVEN_CENTRAL_PASSWORD }}
+      SIGNING_KEY: ${{ secrets.SIGNING_KEY }}
+      SIGNING_PASSWORD: ${{ secrets.SIGNING_PASSWORD }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Set up Java
+        uses: actions/setup-java@v6
+        with:
+          distribution: temurin
+          java-version: '25'
+
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v5
+
+      - name: Publish to Maven Central
+        run: ./gradlew publishAndReleaseToMavenCentral --no-daemon
+
+      - name: Build Android AAR
+        run: ./gradlew bundleAndroidMainAar --no-daemon
+
+      - name: Find Android AAR
+        run: |
+          AAR=$(find . -path '*/build/outputs/aar/*.aar' -type f | head -n 1)
+          echo "AAR=$AAR" >> "$GITHUB_ENV"
+          echo "Built AAR: $AAR"
+
+      - name: Create GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          VERSION=$(./gradlew properties -q | sed -n 's/^version: //p')
+
+          gh release create "v$VERSION" \
+            "$AAR" \
+            --target "$GITHUB_SHA" \
+            --title "Jaudiotagger Kotlin $VERSION" \
+            --generate-notes
