@@ -1,4 +1,4 @@
-rootProject.name = "jaudiotagger"
+rootProject.name = "jaudiotagger-kt"
 
 pluginManagement {
     repositories {
@@ -14,5 +14,3 @@ dependencyResolutionManagement {
         google()
     }
 }
-
-include(":jaudiotagger-kt")

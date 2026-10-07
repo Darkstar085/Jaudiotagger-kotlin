@@ -8,7 +8,7 @@ jdk:
   - openjdk17
 install:
   - ./gradlew
-    :jaudiotagger-kt:publishKotlinMultiplatformPublicationToMavenLocal
-    :jaudiotagger-kt:publishAndroidReleasePublicationToMavenLocal
-    :jaudiotagger-kt:publishJvmPublicationToMavenLocal
+    publishKotlinMultiplatformPublicationToMavenLocal
+    publishAndroidReleasePublicationToMavenLocal
+    publishJvmPublicationToMavenLocal
     --no-daemon

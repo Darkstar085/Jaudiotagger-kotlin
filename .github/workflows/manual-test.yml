@@ -23,4 +23,4 @@ jobs:
         uses: gradle/actions/setup-gradle@v5
 
       - name: Run Kotlin JVM tests
-        run: ./gradlew :jaudiotagger-kt:jvmTest --no-daemon
+        run: ./gradlew jvmTest --no-daemon
