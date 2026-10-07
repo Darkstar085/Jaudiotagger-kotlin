@@ -35,9 +35,6 @@ kotlin {
         commonTest.dependencies {
             implementation(kotlin("test"))
         }
-        jvmTest.dependencies {
-            implementation("net.jthink:jaudiotagger:3.0.1")
-        }
         val androidInstrumentedTest by getting {
             dependencies {
                 implementation(kotlin("test-junit"))

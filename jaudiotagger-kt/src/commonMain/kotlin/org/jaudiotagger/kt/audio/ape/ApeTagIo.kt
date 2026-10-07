@@ -157,7 +157,7 @@ internal object ApeTagIo {
         var scan = scan(io)
         // a tag at the start of the file is not preserved: remove and re-scan
         if (scan.location?.isAtStart == true) {
-            removeRange(io, scan.location!!.removalStart, scan.location!!.removalEnd)
+            removeRange(io, scan.location.removalStart, scan.location.removalEnd)
             scan = scan(io)
         }
 

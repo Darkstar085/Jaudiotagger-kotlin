@@ -4,13 +4,13 @@ Jaudiotagger is an audio metadata library with a Kotlin Multiplatform implementa
 
 ## Kotlin Multiplatform
 
-The `jaudiotagger-kt` module provides the migrated Kotlin implementation for Android, JVM, iOS, and macOS. The format logic is shared through `commonMain`, with platform-specific random-access I/O behind `FileIo`.
+The `jaudiotagger-kt` module is the active library implementation for Android, JVM, iOS, and macOS. Format logic is shared through `commonMain`, with platform-specific file I/O behind `FileIo`.
 
 Supported formats include MP3, FLAC, Ogg Vorbis, Ogg Opus, MP4/M4A, WAV, AIFF, WMA/ASF, Monkey's Audio, WavPack, DSF, DFF, and RealAudio.
 
 ### Build
 
-Run the Kotlin test suite:
+Run the JVM test suite:
 
 ```bash
 ./gradlew :jaudiotagger-kt:jvmTest
@@ -43,19 +43,19 @@ file.tag.set(FieldKey.TITLE, "New title")
 AudioTagger.write(Path("/music/track.flac"), file.tag)
 ```
 
-The Kotlin port avoids runtime reflection and routes file access through `FileIo`, allowing Android MediaStore/SAF files to be edited in place through `FileDescriptorIo`.
+The implementation avoids runtime reflection and routes file access through `FileIo`, allowing Android MediaStore/SAF files to be edited in place through `FileDescriptorIo`.
 
-## Java reference implementation
+## Project layout
 
-The original Java implementation remains under `src/` as the compatibility and porting reference. Its Maven build and test suite are retained.
+- `jaudiotagger-kt/src/commonMain` — shared Kotlin implementation
+- `jaudiotagger-kt/src/androidMain` — Android-specific I/O
+- `jaudiotagger-kt/src/jvmMain` — JVM-specific I/O
+- `jaudiotagger-kt/src/nativeMain` — native I/O
+- `jaudiotagger-kt/src/*Test` — Kotlin regression and platform tests
+- `testdata/` — audio samples used by the Kotlin test suite
+- `.github/workflows/manual-test.yml` — manual Kotlin verification workflow
 
-Run the Java tests with:
-
-```bash
-mvn clean test
-```
-
-See `jaudiotagger-kt/PORTING.md` for the format-by-format migration status, intentional Kotlin differences, and known fixes.
+The repository is Kotlin-first; the legacy Java implementation and Maven build have been removed.
 
 ## License
 

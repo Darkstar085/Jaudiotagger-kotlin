@@ -118,7 +118,7 @@ internal object WavInfoReader {
         }
 
         val durationSeconds = when {
-            sampleCount != null && sampleRate > 0 -> sampleCount!!.toDouble() / sampleRate
+            sampleCount != null && sampleRate > 0 -> sampleCount.toDouble() / sampleRate
             audioDataLength > 0 && byteRate > 0 -> audioDataLength.toDouble() / byteRate
             else -> throw CannotReadException("Wav Data Header Missing")
         }

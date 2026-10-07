@@ -1,4 +1,4 @@
-name: Manual Test
+name: Build and Test
 
 on:
   workflow_dispatch:
@@ -7,7 +7,7 @@ permissions:
   contents: read
 
 jobs:
-  test:
+  kotlin:
     runs-on: ubuntu-latest
 
     steps:
@@ -18,8 +18,9 @@ jobs:
         uses: actions/setup-java@v6
         with:
           distribution: temurin
-          java-version: '8'
-          cache: maven
+          java-version: '17'
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v5
 
-      - name: Run tests
-        run: mvn -B test
+      - name: Run Kotlin JVM tests
+        run: ./gradlew :jaudiotagger-kt:jvmTest --no-daemon

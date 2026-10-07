@@ -78,7 +78,7 @@ internal object Mp3InfoReader {
             index++
         }
 
-        val header = frameHeader!!
+        val header = frameHeader ?: throw CannotReadException("No audio header found within the file")
         val fileSize = io.size
         val frameLength = header.frameLength
         if (frameLength <= 0) throw CannotReadException("Invalid frame length")
