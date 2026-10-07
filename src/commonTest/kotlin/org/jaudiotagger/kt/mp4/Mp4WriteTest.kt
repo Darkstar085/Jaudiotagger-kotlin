@@ -1,9 +1,5 @@
 package org.jaudiotagger.kt.mp4
 
-import kotlin.test.Test
-import kotlin.test.assertEquals
-import kotlin.test.assertIs
-import kotlin.test.assertTrue
 import kotlinx.io.files.Path
 import kotlinx.io.files.SystemFileSystem
 import org.jaudiotagger.kt.AudioTagger
@@ -15,6 +11,10 @@ import org.jaudiotagger.kt.io.withFileIo
 import org.jaudiotagger.kt.tag.Artwork
 import org.jaudiotagger.kt.tag.FieldKey
 import org.jaudiotagger.kt.tag.mp4.Mp4Tag
+import kotlin.test.Test
+import kotlin.test.assertEquals
+import kotlin.test.assertIs
+import kotlin.test.assertTrue
 
 class Mp4WriteTest {
 
@@ -148,11 +148,20 @@ class Mp4WriteTest {
 
         val growTag = AudioTagger.read(path).tag as Mp4Tag
         growTag.set(FieldKey.TITLE, "Moov End Grow")
-        growTag.setArtwork(Artwork(data = ByteArray(60_000) { it.toByte() }, mimeType = "image/jpeg"))
+        growTag.setArtwork(
+            Artwork(
+                data = ByteArray(60_000) { it.toByte() },
+                mimeType = "image/jpeg"
+            )
+        )
         AudioTagger.write(path, growTag)
         assertEquals(originalDuration, AudioTagger.read(path).properties.duration)
         assertTrue(hasNoTrailingBytes(path), "grow must not leave bytes after the last atom")
-        assertEquals("free", topLevelAtomIds(path).lastOrNull(), "rule 3 leaves padding after moov-at-end grow")
+        assertEquals(
+            "free",
+            topLevelAtomIds(path).lastOrNull(),
+            "rule 3 leaves padding after moov-at-end grow"
+        )
 
         val shrinkTag = AudioTagger.read(path).tag as Mp4Tag
         shrinkTag.clear()
@@ -234,7 +243,13 @@ class Mp4WriteTest {
 
     @Test
     fun roundTripSeveralSamples() {
-        for (sample in listOf("test2.m4a", "test4.m4a", "test8.m4a", "test164.m4a", "test.stem.mp4")) {
+        for (sample in listOf(
+            "test2.m4a",
+            "test4.m4a",
+            "test8.m4a",
+            "test164.m4a",
+            "test.stem.mp4"
+        )) {
             if (SystemFileSystem.metadataOrNull(org.jaudiotagger.kt.testDataPath(sample)) == null) continue
             val path = copyToTemp(sample, "mp4-roundtrip")
             val originalDuration = AudioTagger.read(path).properties.duration
@@ -248,7 +263,10 @@ class Mp4WriteTest {
             assertEquals("Round Trip Album", reread.tag.first(FieldKey.ALBUM), sample)
             assertEquals(originalDuration, reread.properties.duration, sample)
             audioBefore.zip(firstChunkBytes(path)).forEachIndexed { index, (before, after) ->
-                assertTrue(before.contentEquals(after), "$sample audio chunk $index moved incorrectly")
+                assertTrue(
+                    before.contentEquals(after),
+                    "$sample audio chunk $index moved incorrectly"
+                )
             }
 
             SystemFileSystem.delete(path)

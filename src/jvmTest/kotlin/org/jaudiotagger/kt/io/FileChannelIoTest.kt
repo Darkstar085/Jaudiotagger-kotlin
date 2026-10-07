@@ -28,9 +28,10 @@ class FileChannelIoTest {
     private fun openChannelWithPattern(): FileChannelIo {
         val file = java.io.File.createTempFile("filechannelio-test", ".bin")
         tempFile = file
-        FileChannel.open(file.toPath(), StandardOpenOption.READ, StandardOpenOption.WRITE).use { channel ->
-            channel.write(ByteBuffer.wrap(createPattern(FILE_SIZE)))
-        }
+        FileChannel.open(file.toPath(), StandardOpenOption.READ, StandardOpenOption.WRITE)
+            .use { channel ->
+                channel.write(ByteBuffer.wrap(createPattern(FILE_SIZE)))
+            }
         return FileChannelIo(
             FileChannel.open(file.toPath(), StandardOpenOption.READ, StandardOpenOption.WRITE),
         )

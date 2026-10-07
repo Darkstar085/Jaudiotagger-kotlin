@@ -44,9 +44,14 @@ internal object OggFile {
     private fun detectCodec(io: FileIo): OggCodec {
         io.position = OggInfoReader.findFirstPageOffset(io)
         val firstPage = OggPageHeader.read(io)
-        val packetStart = io.readFully(minOf(firstPage.pageLength, OpusHeader.CAPTURE_PATTERN_LENGTH))
+        val packetStart =
+            io.readFully(minOf(firstPage.pageLength, OpusHeader.CAPTURE_PATTERN_LENGTH))
         return when {
-            VorbisHeader.isHeaderOfType(packetStart, VorbisPacketType.IDENTIFICATION_HEADER) -> OggCodec.VORBIS
+            VorbisHeader.isHeaderOfType(
+                packetStart,
+                VorbisPacketType.IDENTIFICATION_HEADER
+            ) -> OggCodec.VORBIS
+
             packetStart.decodeLatin1() == OpusHeader.HEAD_CAPTURE_PATTERN -> OggCodec.OPUS
             else -> throw CannotReadException("Unsupported Ogg codec, only Vorbis and Opus can be read")
         }

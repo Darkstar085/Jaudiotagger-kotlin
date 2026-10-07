@@ -1,10 +1,10 @@
 package org.jaudiotagger.kt
 
+import kotlinx.io.files.SystemFileSystem
+import org.jaudiotagger.kt.tag.FieldKey
 import kotlin.test.Test
 import kotlin.test.assertFailsWith
 import kotlin.test.assertTrue
-import kotlinx.io.files.SystemFileSystem
-import org.jaudiotagger.kt.tag.FieldKey
 
 /**
  * Smoke test: every FLAC/OGG sample in testdata must read, and survive a
@@ -13,10 +13,20 @@ import org.jaudiotagger.kt.tag.FieldKey
 class SamplesSmokeTest {
 
     private val samples = listOf(
-        "test.flac", "test2.flac", "test3.flac",
-        "test.ogg", "test3.ogg", "test5.ogg",
-        "test76.ogg", "test77.ogg", "testlargeimage.ogg", "testsmallimage.ogg",
-        "test-opus.opus", "test-opus-padding.opus", "test-opus-binary-tail.opus", "test-opus-in-ogg.ogg",
+        "test.flac",
+        "test2.flac",
+        "test3.flac",
+        "test.ogg",
+        "test3.ogg",
+        "test5.ogg",
+        "test76.ogg",
+        "test77.ogg",
+        "testlargeimage.ogg",
+        "testsmallimage.ogg",
+        "test-opus.opus",
+        "test-opus-padding.opus",
+        "test-opus-binary-tail.opus",
+        "test-opus-in-ogg.ogg",
         "test-opus-track-total.opus",
     )
 

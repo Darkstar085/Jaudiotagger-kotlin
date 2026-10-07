@@ -1,13 +1,13 @@
 package org.jaudiotagger.kt.audio.monkey
 
-import kotlin.math.roundToInt
-import kotlin.time.Duration.Companion.seconds
 import org.jaudiotagger.kt.AudioProperties
 import org.jaudiotagger.kt.CannotReadException
 import org.jaudiotagger.kt.io.FileIo
 import org.jaudiotagger.kt.io.readFully
 import org.jaudiotagger.kt.io.readInt32LE
 import org.jaudiotagger.kt.io.readUInt16LE
+import kotlin.math.roundToInt
+import kotlin.time.Duration.Companion.seconds
 
 /**
  * Reads audio properties from the Monkey's Audio ("MAC ") descriptor and header.
@@ -17,14 +17,17 @@ internal object MonkeyInfoReader {
 
     fun read(io: FileIo): AudioProperties {
         io.position = 0
-        val descriptor = Descriptor.read(io) ?: throw CannotReadException("Not a Monkey's Audio file")
-        val header = Header.read(io, descriptor) ?: throw CannotReadException("Invalid Monkey's Audio header")
+        val descriptor =
+            Descriptor.read(io) ?: throw CannotReadException("Not a Monkey's Audio file")
+        val header = Header.read(io, descriptor)
+            ?: throw CannotReadException("Invalid Monkey's Audio header")
         if (header.sampleRate <= 0) {
             throw CannotReadException("Invalid sample rate in Monkey's Audio header")
         }
 
         val totalSamples = header.totalSamples
-        val durationSeconds = if (totalSamples > 0) totalSamples.toDouble() / header.sampleRate else 0.0
+        val durationSeconds =
+            if (totalSamples > 0) totalSamples.toDouble() / header.sampleRate else 0.0
         val frameBytes = descriptor.frameBytes
         val bitRate = if (frameBytes > 0 && durationSeconds > 0) {
             (frameBytes * 8.0 / durationSeconds / 1000.0).roundToInt()

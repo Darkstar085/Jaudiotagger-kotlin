@@ -1,6 +1,5 @@
 package org.jaudiotagger.kt.audio.real
 
-import kotlin.time.Duration.Companion.seconds
 import org.jaudiotagger.kt.AudioProperties
 import org.jaudiotagger.kt.CannotReadException
 import org.jaudiotagger.kt.io.FileIo
@@ -9,6 +8,7 @@ import org.jaudiotagger.kt.io.readInt32BE
 import org.jaudiotagger.kt.io.readUInt16BE
 import org.jaudiotagger.kt.tag.FieldKey
 import org.jaudiotagger.kt.tag.generic.GenericTag
+import kotlin.time.Duration.Companion.seconds
 
 /**
  * Reads RealAudio/RealMedia (.ra/.rm) properties (PROP chunk) and metadata
@@ -30,7 +30,7 @@ internal object RealFileReader {
         if (size > io.size - io.position + 8) {
             throw CannotReadException(
                 "Corrupt file: RealAudio chunk length of $size at position ${io.position - 4} " +
-                    "extends beyond the end of the file"
+                        "extends beyond the end of the file"
             )
         }
         return Chunk(id, io.readFully(size - 8))

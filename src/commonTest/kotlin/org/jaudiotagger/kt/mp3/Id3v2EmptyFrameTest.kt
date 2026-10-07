@@ -1,14 +1,9 @@
 package org.jaudiotagger.kt.mp3
 
-import kotlin.test.Test
-import kotlin.test.assertEquals
-import kotlin.test.assertIs
-import kotlin.random.Random
 import kotlinx.io.buffered
 import kotlinx.io.files.Path
 import kotlinx.io.files.SystemFileSystem
 import kotlinx.io.files.SystemTemporaryDirectory
-import kotlinx.io.readByteArray
 import org.jaudiotagger.kt.AudioTagger
 import org.jaudiotagger.kt.audio.mp3.Mp3AudioProperties
 import org.jaudiotagger.kt.io.openFileIo
@@ -16,6 +11,10 @@ import org.jaudiotagger.kt.io.readFully
 import org.jaudiotagger.kt.tag.FieldKey
 import org.jaudiotagger.kt.tag.id3.Id3v2Tag
 import org.jaudiotagger.kt.testDataPath
+import kotlin.random.Random
+import kotlin.test.Test
+import kotlin.test.assertEquals
+import kotlin.test.assertIs
 
 /**
  * Zero-size ID3v2 frames must be skipped (Java [EmptyFrameException]) rather than
@@ -98,7 +97,8 @@ class Id3v2EmptyFrameTest {
 
     private fun mp3WithSyntheticTag(tagBytes: ByteArray): Path {
         val audioPath = testDataPath("testV1Cbr128.mp3")
-        val audioStart = (AudioTagger.read(audioPath).properties as Mp3AudioProperties).audioDataStartPosition
+        val audioStart =
+            (AudioTagger.read(audioPath).properties as Mp3AudioProperties).audioDataStartPosition
         val audioBytes = openFileIo(audioPath).use { io ->
             io.position = audioStart
             io.readFully((io.size - audioStart).toInt())

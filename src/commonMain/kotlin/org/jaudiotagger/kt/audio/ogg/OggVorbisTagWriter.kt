@@ -27,7 +27,8 @@ internal object OggVorbisTagWriter {
 
         // Setup header plus any packets sharing its last page; page layout of the
         // original does not matter, we get one contiguous byte blob
-        val setupData = OggVorbisTagReader.readSetupHeaderAndExtraPackets(io, sizes.setupHeaderStartPosition)
+        val setupData =
+            OggVorbisTagReader.readSetupHeaderAndExtraPackets(io, sizes.setupHeaderStartPosition)
 
         OggPageWriter.replaceHeaderPages(
             io,
@@ -87,7 +88,10 @@ internal object OggVorbisTagWriter {
         val completePages = newComment.size / OggPageHeader.MAXIMUM_PAGE_DATA_SIZE
         var commentOffset = 0
         for (i in 0 until completePages) {
-            val segmentTable = OggPageWriter.createSegments(OggPageHeader.MAXIMUM_PAGE_DATA_SIZE, quitStream = false)
+            val segmentTable = OggPageWriter.createSegments(
+                OggPageHeader.MAXIMUM_PAGE_DATA_SIZE,
+                quitStream = false
+            )
             val page = OggPageWriter.buildPage(
                 template,
                 segmentTable,
@@ -95,7 +99,11 @@ internal object OggVorbisTagWriter {
                 template.absoluteGranulePosition,
                 continued = i != 0,
             ) { buffer ->
-                buffer.write(newComment, commentOffset, commentOffset + OggPageHeader.MAXIMUM_PAGE_DATA_SIZE)
+                buffer.write(
+                    newComment,
+                    commentOffset,
+                    commentOffset + OggPageHeader.MAXIMUM_PAGE_DATA_SIZE
+                )
             }
             out.write(page)
             pageCount++
@@ -108,7 +116,8 @@ internal object OggVorbisTagWriter {
         if (!fitsOnASinglePage(lastCommentPartSize, setupSize, extraPackets)) {
             // comment tail and setup header go on separate pages
             run {
-                val segmentTable = OggPageWriter.createSegments(lastCommentPartSize, quitStream = true)
+                val segmentTable =
+                    OggPageWriter.createSegments(lastCommentPartSize, quitStream = true)
                 val page = OggPageWriter.buildPage(
                     template,
                     segmentTable,
@@ -169,7 +178,12 @@ internal object OggVorbisTagWriter {
         // terminating zero lacing value
         buffer.write(OggPageWriter.createSegments(commentLength, quitStream = true))
         // matches jaudiotagger: without extras the setup segments are left "open"
-        buffer.write(OggPageWriter.createSegments(setupHeaderLength, quitStream = extraPackets.isNotEmpty()))
+        buffer.write(
+            OggPageWriter.createSegments(
+                setupHeaderLength,
+                quitStream = extraPackets.isNotEmpty()
+            )
+        )
         for (packet in extraPackets) {
             buffer.write(OggPageWriter.createSegments(packet.length, quitStream = false))
         }

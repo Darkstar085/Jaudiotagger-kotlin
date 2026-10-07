@@ -1,6 +1,5 @@
 package org.jaudiotagger.kt.audio.dff
 
-import kotlin.time.Duration.Companion.seconds
 import org.jaudiotagger.kt.AudioProperties
 import org.jaudiotagger.kt.CannotReadException
 import org.jaudiotagger.kt.io.FileIo
@@ -9,6 +8,7 @@ import org.jaudiotagger.kt.io.readInt32BE
 import org.jaudiotagger.kt.io.readUInt16BE
 import org.jaudiotagger.kt.tag.id3.Id3v2Tag
 import org.jaudiotagger.kt.tag.id3.Id3v2TagReader
+import kotlin.time.Duration.Companion.seconds
 
 /**
  * DFF (DSDIFF): big-endian IFF-style chunks inside a FRM8 form.
@@ -45,7 +45,7 @@ internal object DffFileReader {
             val header = io.readFully(12)
             val id = header.decodeToString(0, 4)
             val size = (header.readInt32BE(4).toUInt().toLong() shl 32) or
-                header.readInt32BE(8).toUInt().toLong()
+                    header.readInt32BE(8).toUInt().toLong()
             val dataStart = io.position
 
             when (id) {

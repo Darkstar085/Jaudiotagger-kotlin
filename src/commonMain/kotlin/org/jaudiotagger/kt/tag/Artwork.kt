@@ -29,6 +29,10 @@ class Artwork(
         const val LINKED_MIME_TYPE = "-->"
 
         fun linked(url: String, pictureType: Int = PictureTypes.DEFAULT_ID): Artwork =
-            Artwork(data = url.encodeToByteArray(), mimeType = LINKED_MIME_TYPE, pictureType = pictureType)
+            Artwork(
+                data = url.encodeToByteArray(),
+                mimeType = LINKED_MIME_TYPE,
+                pictureType = pictureType
+            )
     }
 }

@@ -1,12 +1,12 @@
 package org.jaudiotagger.kt.mp3
 
-import kotlin.test.Test
-import kotlin.test.assertEquals
-import kotlin.test.assertNull
 import org.jaudiotagger.kt.tag.FieldKey
 import org.jaudiotagger.kt.tag.id3.Id3v2Frame
 import org.jaudiotagger.kt.tag.id3.Id3v2Tag
 import org.jaudiotagger.kt.tag.id3.Id3v2Version
+import kotlin.test.Test
+import kotlin.test.assertEquals
+import kotlin.test.assertNull
 
 class Id3v2CommentTest {
 

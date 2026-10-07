@@ -15,7 +15,8 @@ sealed class Mp4Item(val atomId: String) {
     }
 
     /** Reverse-DNS "----" atom: issuer + identifier + UTF-8 value. */
-    class ReverseDns(val issuer: String, val identifier: String, var value: String) : Mp4Item("----") {
+    class ReverseDns(val issuer: String, val identifier: String, var value: String) :
+        Mp4Item("----") {
         override fun toString(): String = "----[$issuer:$identifier]=$value"
     }
 
@@ -58,7 +59,7 @@ class Mp4Tag : Tag {
     private fun matches(item: Mp4Item, k: Mp4FrameKey): Boolean = when (item) {
         is Mp4Item.ReverseDns ->
             k.issuer != null && item.issuer.equals(k.issuer, ignoreCase = true) &&
-                item.identifier.equals(k.identifier, ignoreCase = true)
+                    item.identifier.equals(k.identifier, ignoreCase = true)
 
         else -> k.issuer == null && item.atomId == k.atomId
     }

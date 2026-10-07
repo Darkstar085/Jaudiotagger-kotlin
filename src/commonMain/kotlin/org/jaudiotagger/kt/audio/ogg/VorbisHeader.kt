@@ -61,8 +61,8 @@ internal class VorbisIdentificationHeader(b: ByteArray) {
 
     val isValid: Boolean =
         VorbisHeader.isHeaderOfType(b, VorbisPacketType.IDENTIFICATION_HEADER) &&
-            b.size > FIELD_FRAMING_FLAG_POS &&
-            b[FIELD_FRAMING_FLAG_POS].toInt() != 0
+                b.size > FIELD_FRAMING_FLAG_POS &&
+                b[FIELD_FRAMING_FLAG_POS].toInt() != 0
 
     val encodingType: String get() = "Ogg Vorbis v${vorbisVersion + 1}"
 

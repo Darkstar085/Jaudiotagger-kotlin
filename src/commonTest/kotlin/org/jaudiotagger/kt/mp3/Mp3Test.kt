@@ -1,11 +1,5 @@
 package org.jaudiotagger.kt.mp3
 
-import kotlin.test.Test
-import kotlin.test.assertEquals
-import kotlin.test.assertFailsWith
-import kotlin.test.assertFalse
-import kotlin.test.assertIs
-import kotlin.test.assertTrue
 import kotlinx.io.files.SystemFileSystem
 import org.jaudiotagger.kt.AudioTagger
 import org.jaudiotagger.kt.CannotReadException
@@ -14,6 +8,12 @@ import org.jaudiotagger.kt.copyToTemp
 import org.jaudiotagger.kt.tag.FieldKey
 import org.jaudiotagger.kt.tag.id3.Id3v1Tag
 import org.jaudiotagger.kt.testDataPath
+import kotlin.test.Test
+import kotlin.test.assertEquals
+import kotlin.test.assertFailsWith
+import kotlin.test.assertFalse
+import kotlin.test.assertIs
+import kotlin.test.assertTrue
 
 /**
  * Expected values match the original MP3AudioHeaderTest.
@@ -36,7 +36,8 @@ class Mp3Test {
 
     @Test
     fun readCbr() {
-        val p = assertIs<Mp3AudioProperties>(AudioTagger.read(testDataPath("testV1Cbr128.mp3")).properties)
+        val p =
+            assertIs<Mp3AudioProperties>(AudioTagger.read(testDataPath("testV1Cbr128.mp3")).properties)
         assertEquals(44100, p.sampleRate)
         assertFalse(p.isVariableBitRate)
         assertEquals(128, p.bitRate)
@@ -45,12 +46,14 @@ class Mp3Test {
 
     @Test
     fun readLayer2() {
-        val mono = assertIs<Mp3AudioProperties>(AudioTagger.read(testDataPath("testV1L2mono.mp3")).properties)
+        val mono =
+            assertIs<Mp3AudioProperties>(AudioTagger.read(testDataPath("testV1L2mono.mp3")).properties)
         assertEquals("MPEG-1 Layer 2", mono.encodingType)
         assertEquals(1, mono.channels)
         assertEquals(192, mono.bitRate)
 
-        val stereo = assertIs<Mp3AudioProperties>(AudioTagger.read(testDataPath("testV1L2stereo.mp3")).properties)
+        val stereo =
+            assertIs<Mp3AudioProperties>(AudioTagger.read(testDataPath("testV1L2stereo.mp3")).properties)
         assertEquals(2, stereo.channels)
     }
 

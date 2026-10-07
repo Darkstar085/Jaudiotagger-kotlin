@@ -1,8 +1,5 @@
 package org.jaudiotagger.kt.ape
 
-import kotlin.test.Test
-import kotlin.test.assertEquals
-import kotlin.test.assertTrue
 import kotlinx.io.files.SystemFileSystem
 import org.jaudiotagger.kt.AudioTagger
 import org.jaudiotagger.kt.copyToTemp
@@ -10,6 +7,9 @@ import org.jaudiotagger.kt.tag.Artwork
 import org.jaudiotagger.kt.tag.FieldKey
 import org.jaudiotagger.kt.tag.ape.ApeTag
 import org.jaudiotagger.kt.testDataPath
+import kotlin.test.Test
+import kotlin.test.assertEquals
+import kotlin.test.assertTrue
 
 /**
  * test0001.ape/test0001.wv and test0002.ape/test0002.wv are the same two

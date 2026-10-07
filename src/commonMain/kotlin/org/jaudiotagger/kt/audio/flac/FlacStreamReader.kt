@@ -37,7 +37,8 @@ internal class FlacStreamReader(private val io: FileIo) {
 
     private fun isFlacHeader(): Boolean {
         if (io.size - io.position < FLAC_STREAM_IDENTIFIER_LENGTH) return false
-        return io.readFully(FLAC_STREAM_IDENTIFIER_LENGTH).decodeToString() == FLAC_STREAM_IDENTIFIER
+        return io.readFully(FLAC_STREAM_IDENTIFIER_LENGTH)
+            .decodeToString() == FLAC_STREAM_IDENTIFIER
     }
 
     companion object {

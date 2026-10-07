@@ -26,9 +26,10 @@ internal class OpusIdentificationHeader(b: ByteArray) {
     val preSkip: Int = b.readUInt16LE(FIELD_PRE_SKIP_POS)
 
     // any version with a zero high nibble is compatible with version 1
-    val isValid: Boolean = b.decodeLatin1(0, OpusHeader.CAPTURE_PATTERN_LENGTH) == OpusHeader.HEAD_CAPTURE_PATTERN &&
-        (version and 0xF0) == 0 &&
-        channels > 0
+    val isValid: Boolean =
+        b.decodeLatin1(0, OpusHeader.CAPTURE_PATTERN_LENGTH) == OpusHeader.HEAD_CAPTURE_PATTERN &&
+                (version and 0xF0) == 0 &&
+                channels > 0
 
     companion object {
         const val MINIMUM_LENGTH = 19

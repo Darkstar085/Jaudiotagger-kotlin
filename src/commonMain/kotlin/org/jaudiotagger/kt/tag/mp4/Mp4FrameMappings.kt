@@ -11,7 +11,11 @@ import org.jaudiotagger.kt.tag.FieldKey
 class Mp4FrameKey(val atomId: String, val issuer: String? = null, val identifier: String? = null)
 
 internal val mp4FrameKeys: Map<FieldKey, Mp4FrameKey> = mapOf(
-    FieldKey.ACOUSTID_FINGERPRINT to Mp4FrameKey("----", "com.apple.iTunes", "Acoustid Fingerprint"),
+    FieldKey.ACOUSTID_FINGERPRINT to Mp4FrameKey(
+        "----",
+        "com.apple.iTunes",
+        "Acoustid Fingerprint"
+    ),
     FieldKey.ACOUSTID_ID to Mp4FrameKey("----", "com.apple.iTunes", "Acoustid Id"),
     FieldKey.ALBUM to Mp4FrameKey("©alb"),
     FieldKey.ALBUM_ARTIST to Mp4FrameKey("aART"),
@@ -32,7 +36,11 @@ internal val mp4FrameKeys: Map<FieldKey, Mp4FrameKey> = mapOf(
     FieldKey.AUDIO_ENGINEER to Mp4FrameKey("----", "com.apple.iTunes", "AUDIO_ENGINEER"),
     FieldKey.AUDIO_ENGINEER_SORT to Mp4FrameKey("----", "com.apple.iTunes", "AUDIO_ENGINEER_SORT"),
     FieldKey.BALANCE_ENGINEER to Mp4FrameKey("----", "com.apple.iTunes", "BALANCE_ENGINEER"),
-    FieldKey.BALANCE_ENGINEER_SORT to Mp4FrameKey("----", "com.apple.iTunes", "BALANCE_ENGINEER_SORT"),
+    FieldKey.BALANCE_ENGINEER_SORT to Mp4FrameKey(
+        "----",
+        "com.apple.iTunes",
+        "BALANCE_ENGINEER_SORT"
+    ),
     FieldKey.BARCODE to Mp4FrameKey("----", "com.apple.iTunes", "BARCODE"),
     FieldKey.BPM to Mp4FrameKey("tmpo"),
     FieldKey.CATALOG_NO to Mp4FrameKey("----", "com.apple.iTunes", "CATALOGNUMBER"),
@@ -103,38 +111,158 @@ internal val mp4FrameKeys: Map<FieldKey, Mp4FrameKey> = mapOf(
     FieldKey.MOVEMENT_NO to Mp4FrameKey("©mvi"),
     FieldKey.MOVEMENT_TOTAL to Mp4FrameKey("©mvc"),
     FieldKey.MUSICBRAINZ_WORK to Mp4FrameKey("----", "com.apple.iTunes", "MUSICBRAINZ_WORK"),
-    FieldKey.MUSICBRAINZ_ARTISTID to Mp4FrameKey("----", "com.apple.iTunes", "MusicBrainz Artist Id"),
+    FieldKey.MUSICBRAINZ_ARTISTID to Mp4FrameKey(
+        "----",
+        "com.apple.iTunes",
+        "MusicBrainz Artist Id"
+    ),
     FieldKey.MUSICBRAINZ_DISC_ID to Mp4FrameKey("----", "com.apple.iTunes", "MusicBrainz Disc Id"),
-    FieldKey.MUSICBRAINZ_ORIGINAL_RELEASE_ID to Mp4FrameKey("----", "com.apple.iTunes", "MusicBrainz Original Album Id"),
-    FieldKey.MUSICBRAINZ_RELEASEARTISTID to Mp4FrameKey("----", "com.apple.iTunes", "MusicBrainz Album Artist Id"),
-    FieldKey.MUSICBRAINZ_RELEASEID to Mp4FrameKey("----", "com.apple.iTunes", "MusicBrainz Album Id"),
-    FieldKey.MUSICBRAINZ_RELEASE_COUNTRY to Mp4FrameKey("----", "com.apple.iTunes", "MusicBrainz Album Release Country"),
-    FieldKey.MUSICBRAINZ_RELEASE_GROUP_ID to Mp4FrameKey("----", "com.apple.iTunes", "MusicBrainz Release Group Id"),
-    FieldKey.MUSICBRAINZ_RELEASE_STATUS to Mp4FrameKey("----", "com.apple.iTunes", "MusicBrainz Album Status"),
-    FieldKey.MUSICBRAINZ_RELEASE_TRACK_ID to Mp4FrameKey("----", "com.apple.iTunes", "MusicBrainz Release Track Id"),
-    FieldKey.MUSICBRAINZ_RELEASE_TYPE to Mp4FrameKey("----", "com.apple.iTunes", "MusicBrainz Album Type"),
-    FieldKey.MUSICBRAINZ_TRACK_ID to Mp4FrameKey("----", "com.apple.iTunes", "MusicBrainz Track Id"),
+    FieldKey.MUSICBRAINZ_ORIGINAL_RELEASE_ID to Mp4FrameKey(
+        "----",
+        "com.apple.iTunes",
+        "MusicBrainz Original Album Id"
+    ),
+    FieldKey.MUSICBRAINZ_RELEASEARTISTID to Mp4FrameKey(
+        "----",
+        "com.apple.iTunes",
+        "MusicBrainz Album Artist Id"
+    ),
+    FieldKey.MUSICBRAINZ_RELEASEID to Mp4FrameKey(
+        "----",
+        "com.apple.iTunes",
+        "MusicBrainz Album Id"
+    ),
+    FieldKey.MUSICBRAINZ_RELEASE_COUNTRY to Mp4FrameKey(
+        "----",
+        "com.apple.iTunes",
+        "MusicBrainz Album Release Country"
+    ),
+    FieldKey.MUSICBRAINZ_RELEASE_GROUP_ID to Mp4FrameKey(
+        "----",
+        "com.apple.iTunes",
+        "MusicBrainz Release Group Id"
+    ),
+    FieldKey.MUSICBRAINZ_RELEASE_STATUS to Mp4FrameKey(
+        "----",
+        "com.apple.iTunes",
+        "MusicBrainz Album Status"
+    ),
+    FieldKey.MUSICBRAINZ_RELEASE_TRACK_ID to Mp4FrameKey(
+        "----",
+        "com.apple.iTunes",
+        "MusicBrainz Release Track Id"
+    ),
+    FieldKey.MUSICBRAINZ_RELEASE_TYPE to Mp4FrameKey(
+        "----",
+        "com.apple.iTunes",
+        "MusicBrainz Album Type"
+    ),
+    FieldKey.MUSICBRAINZ_TRACK_ID to Mp4FrameKey(
+        "----",
+        "com.apple.iTunes",
+        "MusicBrainz Track Id"
+    ),
     FieldKey.MUSICBRAINZ_WORK_ID to Mp4FrameKey("----", "com.apple.iTunes", "MusicBrainz Work Id"),
-    FieldKey.MUSICBRAINZ_RECORDING_WORK_ID to Mp4FrameKey("----", "com.apple.iTunes", "MUSICBRAINZ_RECORDING_WORK_ID"),
-    FieldKey.MUSICBRAINZ_WORK_PART_LEVEL1_ID to Mp4FrameKey("----", "com.apple.iTunes", "MUSICBRAINZ_WORK_PART_LEVEL1_ID"),
-    FieldKey.MUSICBRAINZ_RECORDING_WORK to Mp4FrameKey("----", "com.apple.iTunes", "MUSICBRAINZ_RECORDING_WORK"),
-    FieldKey.MUSICBRAINZ_WORK_PART_LEVEL1 to Mp4FrameKey("----", "com.apple.iTunes", "MUSICBRAINZ_WORK_PART_LEVEL1"),
-    FieldKey.MUSICBRAINZ_WORK_PART_LEVEL1_TYPE to Mp4FrameKey("----", "com.apple.iTunes", "MUSICBRAINZ_WORK_PART_LEVEL1_TYPE"),
-    FieldKey.MUSICBRAINZ_WORK_PART_LEVEL2_ID to Mp4FrameKey("----", "com.apple.iTunes", "MUSICBRAINZ_WORK_PART_LEVEL2_ID"),
-    FieldKey.MUSICBRAINZ_WORK_PART_LEVEL2 to Mp4FrameKey("----", "com.apple.iTunes", "MUSICBRAINZ_WORK_PART_LEVEL2"),
-    FieldKey.MUSICBRAINZ_WORK_PART_LEVEL2_TYPE to Mp4FrameKey("----", "com.apple.iTunes", "MUSICBRAINZ_WORK_PART_LEVEL2_TYPE"),
-    FieldKey.MUSICBRAINZ_WORK_PART_LEVEL3_ID to Mp4FrameKey("----", "com.apple.iTunes", "MUSICBRAINZ_WORK_PART_LEVEL3_ID"),
-    FieldKey.MUSICBRAINZ_WORK_PART_LEVEL3 to Mp4FrameKey("----", "com.apple.iTunes", "MUSICBRAINZ_WORK_PART_LEVEL3"),
-    FieldKey.MUSICBRAINZ_WORK_PART_LEVEL3_TYPE to Mp4FrameKey("----", "com.apple.iTunes", "MUSICBRAINZ_WORK_PART_LEVEL3_TYPE"),
-    FieldKey.MUSICBRAINZ_WORK_PART_LEVEL4_ID to Mp4FrameKey("----", "com.apple.iTunes", "MUSICBRAINZ_WORK_PART_LEVEL4_ID"),
-    FieldKey.MUSICBRAINZ_WORK_PART_LEVEL4 to Mp4FrameKey("----", "com.apple.iTunes", "MUSICBRAINZ_WORK_PART_LEVEL4"),
-    FieldKey.MUSICBRAINZ_WORK_PART_LEVEL4_TYPE to Mp4FrameKey("----", "com.apple.iTunes", "MUSICBRAINZ_WORK_PART_LEVEL4_TYPE"),
-    FieldKey.MUSICBRAINZ_WORK_PART_LEVEL5_ID to Mp4FrameKey("----", "com.apple.iTunes", "MUSICBRAINZ_WORK_PART_LEVEL5_ID"),
-    FieldKey.MUSICBRAINZ_WORK_PART_LEVEL5 to Mp4FrameKey("----", "com.apple.iTunes", "MUSICBRAINZ_WORK_PART_LEVEL5"),
-    FieldKey.MUSICBRAINZ_WORK_PART_LEVEL5_TYPE to Mp4FrameKey("----", "com.apple.iTunes", "MUSICBRAINZ_WORK_PART_LEVEL5_TYPE"),
-    FieldKey.MUSICBRAINZ_WORK_PART_LEVEL6_ID to Mp4FrameKey("----", "com.apple.iTunes", "MUSICBRAINZ_WORK_PART_LEVEL6_ID"),
-    FieldKey.MUSICBRAINZ_WORK_PART_LEVEL6 to Mp4FrameKey("----", "com.apple.iTunes", "MUSICBRAINZ_WORK_PART_LEVEL6"),
-    FieldKey.MUSICBRAINZ_WORK_PART_LEVEL6_TYPE to Mp4FrameKey("----", "com.apple.iTunes", "MUSICBRAINZ_WORK_PART_LEVEL6_TYPE"),
+    FieldKey.MUSICBRAINZ_RECORDING_WORK_ID to Mp4FrameKey(
+        "----",
+        "com.apple.iTunes",
+        "MUSICBRAINZ_RECORDING_WORK_ID"
+    ),
+    FieldKey.MUSICBRAINZ_WORK_PART_LEVEL1_ID to Mp4FrameKey(
+        "----",
+        "com.apple.iTunes",
+        "MUSICBRAINZ_WORK_PART_LEVEL1_ID"
+    ),
+    FieldKey.MUSICBRAINZ_RECORDING_WORK to Mp4FrameKey(
+        "----",
+        "com.apple.iTunes",
+        "MUSICBRAINZ_RECORDING_WORK"
+    ),
+    FieldKey.MUSICBRAINZ_WORK_PART_LEVEL1 to Mp4FrameKey(
+        "----",
+        "com.apple.iTunes",
+        "MUSICBRAINZ_WORK_PART_LEVEL1"
+    ),
+    FieldKey.MUSICBRAINZ_WORK_PART_LEVEL1_TYPE to Mp4FrameKey(
+        "----",
+        "com.apple.iTunes",
+        "MUSICBRAINZ_WORK_PART_LEVEL1_TYPE"
+    ),
+    FieldKey.MUSICBRAINZ_WORK_PART_LEVEL2_ID to Mp4FrameKey(
+        "----",
+        "com.apple.iTunes",
+        "MUSICBRAINZ_WORK_PART_LEVEL2_ID"
+    ),
+    FieldKey.MUSICBRAINZ_WORK_PART_LEVEL2 to Mp4FrameKey(
+        "----",
+        "com.apple.iTunes",
+        "MUSICBRAINZ_WORK_PART_LEVEL2"
+    ),
+    FieldKey.MUSICBRAINZ_WORK_PART_LEVEL2_TYPE to Mp4FrameKey(
+        "----",
+        "com.apple.iTunes",
+        "MUSICBRAINZ_WORK_PART_LEVEL2_TYPE"
+    ),
+    FieldKey.MUSICBRAINZ_WORK_PART_LEVEL3_ID to Mp4FrameKey(
+        "----",
+        "com.apple.iTunes",
+        "MUSICBRAINZ_WORK_PART_LEVEL3_ID"
+    ),
+    FieldKey.MUSICBRAINZ_WORK_PART_LEVEL3 to Mp4FrameKey(
+        "----",
+        "com.apple.iTunes",
+        "MUSICBRAINZ_WORK_PART_LEVEL3"
+    ),
+    FieldKey.MUSICBRAINZ_WORK_PART_LEVEL3_TYPE to Mp4FrameKey(
+        "----",
+        "com.apple.iTunes",
+        "MUSICBRAINZ_WORK_PART_LEVEL3_TYPE"
+    ),
+    FieldKey.MUSICBRAINZ_WORK_PART_LEVEL4_ID to Mp4FrameKey(
+        "----",
+        "com.apple.iTunes",
+        "MUSICBRAINZ_WORK_PART_LEVEL4_ID"
+    ),
+    FieldKey.MUSICBRAINZ_WORK_PART_LEVEL4 to Mp4FrameKey(
+        "----",
+        "com.apple.iTunes",
+        "MUSICBRAINZ_WORK_PART_LEVEL4"
+    ),
+    FieldKey.MUSICBRAINZ_WORK_PART_LEVEL4_TYPE to Mp4FrameKey(
+        "----",
+        "com.apple.iTunes",
+        "MUSICBRAINZ_WORK_PART_LEVEL4_TYPE"
+    ),
+    FieldKey.MUSICBRAINZ_WORK_PART_LEVEL5_ID to Mp4FrameKey(
+        "----",
+        "com.apple.iTunes",
+        "MUSICBRAINZ_WORK_PART_LEVEL5_ID"
+    ),
+    FieldKey.MUSICBRAINZ_WORK_PART_LEVEL5 to Mp4FrameKey(
+        "----",
+        "com.apple.iTunes",
+        "MUSICBRAINZ_WORK_PART_LEVEL5"
+    ),
+    FieldKey.MUSICBRAINZ_WORK_PART_LEVEL5_TYPE to Mp4FrameKey(
+        "----",
+        "com.apple.iTunes",
+        "MUSICBRAINZ_WORK_PART_LEVEL5_TYPE"
+    ),
+    FieldKey.MUSICBRAINZ_WORK_PART_LEVEL6_ID to Mp4FrameKey(
+        "----",
+        "com.apple.iTunes",
+        "MUSICBRAINZ_WORK_PART_LEVEL6_ID"
+    ),
+    FieldKey.MUSICBRAINZ_WORK_PART_LEVEL6 to Mp4FrameKey(
+        "----",
+        "com.apple.iTunes",
+        "MUSICBRAINZ_WORK_PART_LEVEL6"
+    ),
+    FieldKey.MUSICBRAINZ_WORK_PART_LEVEL6_TYPE to Mp4FrameKey(
+        "----",
+        "com.apple.iTunes",
+        "MUSICBRAINZ_WORK_PART_LEVEL6_TYPE"
+    ),
     FieldKey.MUSICIP_ID to Mp4FrameKey("----", "com.apple.iTunes", "MusicIP PUID"),
     FieldKey.OCCASION to Mp4FrameKey("----", "com.apple.iTunes", "OCCASION"),
     FieldKey.OPUS to Mp4FrameKey("----", "com.apple.iTunes", "OPUS"),
@@ -160,12 +288,20 @@ internal val mp4FrameKeys: Map<FieldKey, Mp4FrameKey> = mapOf(
     FieldKey.RATING to Mp4FrameKey("rate"),
     FieldKey.RECORD_LABEL to Mp4FrameKey("----", "com.apple.iTunes", "LABEL"),
     FieldKey.RECORDING_ENGINEER to Mp4FrameKey("----", "com.apple.iTunes", "RECORDING_ENGINEER"),
-    FieldKey.RECORDING_ENGINEER_SORT to Mp4FrameKey("----", "com.apple.iTunes", "RECORDING_ENGINEER_SORT"),
+    FieldKey.RECORDING_ENGINEER_SORT to Mp4FrameKey(
+        "----",
+        "com.apple.iTunes",
+        "RECORDING_ENGINEER_SORT"
+    ),
     FieldKey.REMIXER to Mp4FrameKey("----", "com.apple.iTunes", "REMIXER"),
     FieldKey.ROONALBUMTAG to Mp4FrameKey("----", "com.apple.iTunes", "ROONALBUMTAG"),
     FieldKey.ROONTRACKTAG to Mp4FrameKey("----", "com.apple.iTunes", "ROONTRACKTAG"),
     FieldKey.SCRIPT to Mp4FrameKey("----", "com.apple.iTunes", "SCRIPT"),
-    FieldKey.SINGLE_DISC_TRACK_NO to Mp4FrameKey("----", "com.apple.iTunes", "SINGLE_DISC_TRACK_NO"),
+    FieldKey.SINGLE_DISC_TRACK_NO to Mp4FrameKey(
+        "----",
+        "com.apple.iTunes",
+        "SINGLE_DISC_TRACK_NO"
+    ),
     FieldKey.SOUND_ENGINEER to Mp4FrameKey("----", "com.apple.iTunes", "SOUND_ENGINEER"),
     FieldKey.SOUND_ENGINEER_SORT to Mp4FrameKey("----", "com.apple.iTunes", "SOUND_ENGINEER_SORT"),
     FieldKey.SUBTITLE to Mp4FrameKey("----", "com.apple.iTunes", "SUBTITLE"),
@@ -178,15 +314,47 @@ internal val mp4FrameKeys: Map<FieldKey, Mp4FrameKey> = mapOf(
     FieldKey.TONALITY to Mp4FrameKey("----", "com.apple.iTunes", "TONALITY"),
     FieldKey.TRACK to Mp4FrameKey("trkn"),
     FieldKey.TRACK_TOTAL to Mp4FrameKey("trkn"),
-    FieldKey.URL_BANDCAMP_ARTIST_SITE to Mp4FrameKey("----", "com.apple.iTunes", "URL_BANDCAMP_ARTIST_SITE"),
-    FieldKey.URL_BANDCAMP_RELEASE_SITE to Mp4FrameKey("----", "com.apple.iTunes", "URL_BANDCAMP_RELEASE_SITE"),
-    FieldKey.URL_DISCOGS_ARTIST_SITE to Mp4FrameKey("----", "com.apple.iTunes", "URL_DISCOGS_ARTIST_SITE"),
-    FieldKey.URL_DISCOGS_RELEASE_SITE to Mp4FrameKey("----", "com.apple.iTunes", "URL_DISCOGS_RELEASE_SITE"),
+    FieldKey.URL_BANDCAMP_ARTIST_SITE to Mp4FrameKey(
+        "----",
+        "com.apple.iTunes",
+        "URL_BANDCAMP_ARTIST_SITE"
+    ),
+    FieldKey.URL_BANDCAMP_RELEASE_SITE to Mp4FrameKey(
+        "----",
+        "com.apple.iTunes",
+        "URL_BANDCAMP_RELEASE_SITE"
+    ),
+    FieldKey.URL_DISCOGS_ARTIST_SITE to Mp4FrameKey(
+        "----",
+        "com.apple.iTunes",
+        "URL_DISCOGS_ARTIST_SITE"
+    ),
+    FieldKey.URL_DISCOGS_RELEASE_SITE to Mp4FrameKey(
+        "----",
+        "com.apple.iTunes",
+        "URL_DISCOGS_RELEASE_SITE"
+    ),
     FieldKey.URL_LYRICS_SITE to Mp4FrameKey("----", "com.apple.iTunes", "URL_LYRICS_SITE"),
-    FieldKey.URL_OFFICIAL_ARTIST_SITE to Mp4FrameKey("----", "com.apple.iTunes", "URL_OFFICIAL_ARTIST_SITE"),
-    FieldKey.URL_OFFICIAL_RELEASE_SITE to Mp4FrameKey("----", "com.apple.iTunes", "URL_OFFICIAL_RELEASE_SITE"),
-    FieldKey.URL_WIKIPEDIA_ARTIST_SITE to Mp4FrameKey("----", "com.apple.iTunes", "URL_WIKIPEDIA_ARTIST_SITE"),
-    FieldKey.URL_WIKIPEDIA_RELEASE_SITE to Mp4FrameKey("----", "com.apple.iTunes", "URL_WIKIPEDIA_RELEASE_SITE"),
+    FieldKey.URL_OFFICIAL_ARTIST_SITE to Mp4FrameKey(
+        "----",
+        "com.apple.iTunes",
+        "URL_OFFICIAL_ARTIST_SITE"
+    ),
+    FieldKey.URL_OFFICIAL_RELEASE_SITE to Mp4FrameKey(
+        "----",
+        "com.apple.iTunes",
+        "URL_OFFICIAL_RELEASE_SITE"
+    ),
+    FieldKey.URL_WIKIPEDIA_ARTIST_SITE to Mp4FrameKey(
+        "----",
+        "com.apple.iTunes",
+        "URL_WIKIPEDIA_ARTIST_SITE"
+    ),
+    FieldKey.URL_WIKIPEDIA_RELEASE_SITE to Mp4FrameKey(
+        "----",
+        "com.apple.iTunes",
+        "URL_WIKIPEDIA_RELEASE_SITE"
+    ),
     FieldKey.VERSION to Mp4FrameKey("----", "com.apple.iTunes", "VERSION"),
     FieldKey.WORK to Mp4FrameKey("©wrk"),
     FieldKey.YEAR to Mp4FrameKey("©day"),

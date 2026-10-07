@@ -1,9 +1,5 @@
 package org.jaudiotagger.kt.ogg
 
-import kotlin.test.Test
-import kotlin.test.assertEquals
-import kotlin.test.assertFailsWith
-import kotlin.test.assertTrue
 import kotlinx.io.buffered
 import kotlinx.io.files.Path
 import kotlinx.io.files.SystemFileSystem
@@ -19,12 +15,20 @@ import org.jaudiotagger.kt.tag.FieldKey
 import org.jaudiotagger.kt.tag.vorbiscomment.VorbisCommentCodec
 import org.jaudiotagger.kt.tag.vorbiscomment.VorbisCommentTag
 import org.jaudiotagger.kt.testDataPath
+import kotlin.test.Test
+import kotlin.test.assertEquals
+import kotlin.test.assertFailsWith
+import kotlin.test.assertTrue
 
 class OpusWriteTest {
 
     @Test
     fun noOpWriteIsByteIdentical() {
-        for (sample in listOf("test-opus.opus", "test-opus-padding.opus", "test-opus-binary-tail.opus")) {
+        for (sample in listOf(
+            "test-opus.opus",
+            "test-opus-padding.opus",
+            "test-opus-binary-tail.opus"
+        )) {
             val path = copyToTemp(sample, "opus-noop")
             val original = readBytes(path)
             val file = AudioTagger.read(path)
@@ -149,7 +153,10 @@ class OpusWriteTest {
                 assertEquals(0L, page.absoluteGranulePosition)
             }
             if (index >= 1) {
-                assertEquals(OggPageHeader.HeaderTypeFlag.CONTINUED_PACKET.fileValue, page.headerType)
+                assertEquals(
+                    OggPageHeader.HeaderTypeFlag.CONTINUED_PACKET.fileValue,
+                    page.headerType
+                )
             }
         }
 

@@ -1,10 +1,5 @@
 package org.jaudiotagger.kt.mp3
 
-import kotlin.math.abs
-import kotlin.test.Test
-import kotlin.test.assertEquals
-import kotlin.test.assertIs
-import kotlin.test.assertTrue
 import kotlinx.io.files.SystemFileSystem
 import org.jaudiotagger.kt.AudioTagger
 import org.jaudiotagger.kt.audio.mp3.Mp3AudioProperties
@@ -12,6 +7,11 @@ import org.jaudiotagger.kt.copyToTemp
 import org.jaudiotagger.kt.io.openFileIo
 import org.jaudiotagger.kt.io.readFully
 import org.jaudiotagger.kt.testDataPath
+import kotlin.math.abs
+import kotlin.test.Test
+import kotlin.test.assertEquals
+import kotlin.test.assertIs
+import kotlin.test.assertTrue
 
 class Mp3DurationTest {
 

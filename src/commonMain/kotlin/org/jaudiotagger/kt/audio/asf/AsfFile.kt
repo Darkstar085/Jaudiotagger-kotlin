@@ -1,6 +1,5 @@
 package org.jaudiotagger.kt.audio.asf
 
-import kotlin.time.Duration.Companion.seconds
 import kotlinx.io.Buffer
 import kotlinx.io.readByteArray
 import org.jaudiotagger.kt.AudioProperties
@@ -13,6 +12,7 @@ import org.jaudiotagger.kt.io.readInt32LE
 import org.jaudiotagger.kt.io.readUInt16LE
 import org.jaudiotagger.kt.io.u
 import org.jaudiotagger.kt.tag.asf.AsfTag
+import kotlin.time.Duration.Companion.seconds
 
 /**
  * ASF (WMA) container. Read/write ports [org.jaudiotagger.audio.asf.util.TagConverter]
@@ -21,21 +21,96 @@ import org.jaudiotagger.kt.tag.asf.AsfTag
 internal object AsfFile {
 
     private val GUID_HEADER = guid(
-        0x30, 0x26, 0xb2, 0x75, 0x8e, 0x66, 0xcf, 0x11, 0xa6, 0xd9, 0x00, 0xaa, 0x00, 0x62, 0xce, 0x6c
+        0x30,
+        0x26,
+        0xb2,
+        0x75,
+        0x8e,
+        0x66,
+        0xcf,
+        0x11,
+        0xa6,
+        0xd9,
+        0x00,
+        0xaa,
+        0x00,
+        0x62,
+        0xce,
+        0x6c
     )
     private val GUID_FILE_PROPERTIES = guid(
-        0xA1, 0xDC, 0xAB, 0x8C, 0x47, 0xA9, 0xCF, 0x11, 0x8E, 0xE4, 0x00, 0xC0, 0x0C, 0x20, 0x53, 0x65
+        0xA1,
+        0xDC,
+        0xAB,
+        0x8C,
+        0x47,
+        0xA9,
+        0xCF,
+        0x11,
+        0x8E,
+        0xE4,
+        0x00,
+        0xC0,
+        0x0C,
+        0x20,
+        0x53,
+        0x65
     )
     private val GUID_STREAM_PROPERTIES = guid(
-        0x91, 0x07, 0xDC, 0xB7, 0xB7, 0xA9, 0xCF, 0x11, 0x8E, 0xE6, 0x00, 0xC0, 0x0C, 0x20, 0x53, 0x65
+        0x91,
+        0x07,
+        0xDC,
+        0xB7,
+        0xB7,
+        0xA9,
+        0xCF,
+        0x11,
+        0x8E,
+        0xE6,
+        0x00,
+        0xC0,
+        0x0C,
+        0x20,
+        0x53,
+        0x65
     )
     private val GUID_AUDIO_STREAM = guid(
-        0x40, 0x9E, 0x69, 0xF8, 0x4D, 0x5B, 0xCF, 0x11, 0xA8, 0xFD, 0x00, 0x80, 0x5F, 0x5C, 0x44, 0x2B
+        0x40,
+        0x9E,
+        0x69,
+        0xF8,
+        0x4D,
+        0x5B,
+        0xCF,
+        0x11,
+        0xA8,
+        0xFD,
+        0x00,
+        0x80,
+        0x5F,
+        0x5C,
+        0x44,
+        0x2B
     )
     private val GUID_CONTENT_DESCRIPTION = AsfContainerType.CONTENT_DESCRIPTION.guid
     private val GUID_EXT_CONTENT_DESCRIPTION = AsfContainerType.EXTENDED_CONTENT.guid
     private val GUID_HEADER_EXTENSION = guid(
-        0xb5, 0x03, 0xbf, 0x5f, 0x2E, 0xA9, 0xCF, 0x11, 0x8e, 0xe3, 0x00, 0xc0, 0x0c, 0x20, 0x53, 0x65
+        0xb5,
+        0x03,
+        0xbf,
+        0x5f,
+        0x2E,
+        0xA9,
+        0xCF,
+        0x11,
+        0x8e,
+        0xe3,
+        0x00,
+        0xc0,
+        0x0c,
+        0x20,
+        0x53,
+        0x65
     )
     private val GUID_METADATA = AsfContainerType.METADATA_OBJECT.guid
     private val GUID_METADATA_LIBRARY = AsfContainerType.METADATA_LIBRARY.guid
@@ -182,9 +257,14 @@ internal object AsfFile {
 
         for (obj in header.objects) {
             when {
-                obj.guid.contentEquals(GUID_CONTENT_DESCRIPTION) -> parseContentDescription(obj.data, tag)
+                obj.guid.contentEquals(GUID_CONTENT_DESCRIPTION) -> parseContentDescription(
+                    obj.data,
+                    tag
+                )
+
                 obj.guid.contentEquals(GUID_EXT_CONTENT_DESCRIPTION) ->
                     parseDescriptorContainer(obj.data, AsfContainerType.EXTENDED_CONTENT, collected)
+
                 obj.guid.contentEquals(GUID_HEADER_EXTENSION) ->
                     parseHeaderExtensionForRead(obj.data, collected)
             }
@@ -267,9 +347,9 @@ internal object AsfFile {
 
         header.objects.removeAll { obj ->
             obj.guid.contentEquals(GUID_CONTENT_DESCRIPTION) ||
-                obj.guid.contentEquals(GUID_EXT_CONTENT_DESCRIPTION) ||
-                obj.guid.contentEquals(GUID_METADATA) ||
-                obj.guid.contentEquals(GUID_METADATA_LIBRARY)
+                    obj.guid.contentEquals(GUID_EXT_CONTENT_DESCRIPTION) ||
+                    obj.guid.contentEquals(GUID_METADATA) ||
+                    obj.guid.contentEquals(GUID_METADATA_LIBRARY)
         }
 
         val extIndex = header.objects.indexOfFirst { it.guid.contentEquals(GUID_HEADER_EXTENSION) }
@@ -305,9 +385,16 @@ internal object AsfFile {
         if (ecdDescriptors.isNotEmpty()) {
             when (presence.placement(2)) {
                 ChunkPlacement.MAIN_HEADER ->
-                    insertMainObject(header, GUID_EXT_CONTENT_DESCRIPTION, ecdData, presence.mainFor(2))
+                    insertMainObject(
+                        header,
+                        GUID_EXT_CONTENT_DESCRIPTION,
+                        ecdData,
+                        presence.mainFor(2)
+                    )
+
                 ChunkPlacement.HEADER_EXTENSION ->
                     extEmbedded += HeaderObject(GUID_EXT_CONTENT_DESCRIPTION, ecdData)
+
                 ChunkPlacement.ABSENT ->
                     insertMainObject(header, GUID_EXT_CONTENT_DESCRIPTION, ecdData, false)
             }
@@ -325,7 +412,10 @@ internal object AsfFile {
         if (metadataLibraryDescriptors.isNotEmpty()) {
             extEmbedded += HeaderObject(
                 GUID_METADATA_LIBRARY,
-                writeMetadataContainer(AsfContainerType.METADATA_LIBRARY, metadataLibraryDescriptors),
+                writeMetadataContainer(
+                    AsfContainerType.METADATA_LIBRARY,
+                    metadataLibraryDescriptors
+                ),
             )
         }
 
@@ -342,7 +432,7 @@ internal object AsfFile {
         val header = readHeader(io)
         header.objects.removeAll {
             it.guid.contentEquals(GUID_CONTENT_DESCRIPTION) ||
-                it.guid.contentEquals(GUID_EXT_CONTENT_DESCRIPTION)
+                    it.guid.contentEquals(GUID_EXT_CONTENT_DESCRIPTION)
         }
         val extIndex = header.objects.indexOfFirst { it.guid.contentEquals(GUID_HEADER_EXTENSION) }
         if (extIndex >= 0) {
@@ -379,8 +469,10 @@ internal object AsfFile {
             when {
                 obj.guid.contentEquals(GUID_CONTENT_DESCRIPTION) ->
                     markMain(result, AsfContainerType.CONTENT_DESCRIPTION)
+
                 obj.guid.contentEquals(GUID_EXT_CONTENT_DESCRIPTION) ->
                     markMain(result, AsfContainerType.EXTENDED_CONTENT)
+
                 obj.guid.contentEquals(GUID_HEADER_EXTENSION) -> {
                     var pos = 22
                     while (pos + 24 <= obj.data.size) {
@@ -389,8 +481,10 @@ internal object AsfFile {
                         when {
                             obj.data.guidAt(pos, GUID_EXT_CONTENT_DESCRIPTION) ->
                                 markExtension(result, AsfContainerType.EXTENDED_CONTENT)
+
                             obj.data.guidAt(pos, GUID_METADATA) ->
                                 markExtension(result, AsfContainerType.METADATA_OBJECT)
+
                             obj.data.guidAt(pos, GUID_METADATA_LIBRARY) ->
                                 markExtension(result, AsfContainerType.METADATA_LIBRARY)
                         }
@@ -436,11 +530,17 @@ internal object AsfFile {
 
     private fun Map<AsfContainerType, ContainerPresence>.placement(index: Int): ChunkPlacement {
         val type = AsfContainerType.distributionOrder[index]
-        val presence = get(type) ?: return if (index <= 2) ChunkPlacement.MAIN_HEADER else ChunkPlacement.HEADER_EXTENSION
+        val presence = get(type)
+            ?: return if (index <= 2) ChunkPlacement.MAIN_HEADER else ChunkPlacement.HEADER_EXTENSION
         return presence.placement(index)
     }
 
-    private fun insertMainObject(header: Header, guid: ByteArray, data: ByteArray, replaceExisting: Boolean) {
+    private fun insertMainObject(
+        header: Header,
+        guid: ByteArray,
+        data: ByteArray,
+        replaceExisting: Boolean
+    ) {
         if (replaceExisting) {
             val index = header.objects.indexOfFirst { it.guid.contentEquals(guid) }
             if (index >= 0) {

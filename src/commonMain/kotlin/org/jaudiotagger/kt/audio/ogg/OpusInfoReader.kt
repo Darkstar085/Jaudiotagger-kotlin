@@ -1,10 +1,10 @@
 package org.jaudiotagger.kt.audio.ogg
 
-import kotlin.time.Duration.Companion.seconds
 import org.jaudiotagger.kt.AudioProperties
 import org.jaudiotagger.kt.CannotReadException
 import org.jaudiotagger.kt.io.FileIo
 import org.jaudiotagger.kt.io.readFully
+import kotlin.time.Duration.Companion.seconds
 
 /**
  * Reads audio properties from an Ogg Opus stream: channels and pre-skip from the identification

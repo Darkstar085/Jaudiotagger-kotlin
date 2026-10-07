@@ -41,7 +41,15 @@ class FileDescriptorIoParityTest {
     )
 
     private val fieldNames = listOf(
-        "TITLE", "ARTIST", "ALBUM", "ALBUM_ARTIST", "TRACK", "DISC_NO", "COMMENT", "LYRICS", "GENRE",
+        "TITLE",
+        "ARTIST",
+        "ALBUM",
+        "ALBUM_ARTIST",
+        "TRACK",
+        "DISC_NO",
+        "COMMENT",
+        "LYRICS",
+        "GENRE",
     )
 
     private val context
@@ -203,7 +211,11 @@ class FileDescriptorIoParityTest {
                     for (i in 0 until readA) {
                         if (bufA[i] != bufB[i]) {
                             check(false) {
-                                "$sample $step: first diff at $offset sha256(a)=${sha256(a)} sha256(b)=${sha256(b)}"
+                                "$sample $step: first diff at $offset sha256(a)=${sha256(a)} sha256(b)=${
+                                    sha256(
+                                        b
+                                    )
+                                }"
                             }
                         }
                     }

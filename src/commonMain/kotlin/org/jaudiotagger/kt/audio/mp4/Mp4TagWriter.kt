@@ -36,7 +36,8 @@ internal object Mp4TagWriter {
         class Leaf(id: String, var data: ByteArray) : Node(id)
 
         /** [preamble] holds bytes between the header and the children (meta version/flags). */
-        class Container(id: String, val preamble: ByteArray, val children: MutableList<Node>) : Node(id)
+        class Container(id: String, val preamble: ByteArray, val children: MutableList<Node>) :
+            Node(id)
     }
 
     private val containerIds = setOf("udta", "meta", "trak", "mdia", "minf", "stbl")
@@ -63,7 +64,11 @@ internal object Mp4TagWriter {
             if (to - from >= preambleLength) {
                 val children = parseChildren(data, from + preambleLength, to)
                 if (children != null) {
-                    return Node.Container(id, data.copyOfRange(from, from + preambleLength), children)
+                    return Node.Container(
+                        id,
+                        data.copyOfRange(from, from + preambleLength),
+                        children
+                    )
                 }
             }
         }
@@ -125,7 +130,12 @@ internal object Mp4TagWriter {
         for (item in tag.items) {
             when (item) {
                 is Mp4Item.Text ->
-                    body.write(buildItem(item.atomId, buildDataBox(TYPE_TEXT, item.value.encodeToByteArray())))
+                    body.write(
+                        buildItem(
+                            item.atomId,
+                            buildDataBox(TYPE_TEXT, item.value.encodeToByteArray())
+                        )
+                    )
 
                 is Mp4Item.ReverseDns -> {
                     val mean = Buffer().also {
@@ -139,7 +149,12 @@ internal object Mp4TagWriter {
                         it.write(int32BE(0)); it.write(payload)
                     }.readByteArray()
                     body.write(
-                        buildItem("----", mean, name, buildDataBox(TYPE_TEXT, item.value.encodeToByteArray()))
+                        buildItem(
+                            "----",
+                            mean,
+                            name,
+                            buildDataBox(TYPE_TEXT, item.value.encodeToByteArray())
+                        )
                     )
                 }
 
@@ -196,8 +211,9 @@ internal object Mp4TagWriter {
         // prefer moov>udta>meta, accept moov>meta; create moov>udta>meta when absent
         val udta = moovChildren.filterIsInstance<Node.Container>().firstOrNull { it.id == "udta" }
         val metaParent: MutableList<Node>
-        val existingMeta = udta?.children?.filterIsInstance<Node.Container>()?.firstOrNull { it.id == "meta" }
-            ?: moovChildren.filterIsInstance<Node.Container>().firstOrNull { it.id == "meta" }
+        val existingMeta =
+            udta?.children?.filterIsInstance<Node.Container>()?.firstOrNull { it.id == "meta" }
+                ?: moovChildren.filterIsInstance<Node.Container>().firstOrNull { it.id == "meta" }
 
         if (existingMeta != null) return existingMeta
 
@@ -317,7 +333,7 @@ internal object Mp4TagWriter {
                         val pos = 8 + i * 8
                         if (pos + 8 > data.size) break
                         val offset = (data.readInt32BE(pos).toUInt().toLong() shl 32) or
-                            data.readInt32BE(pos + 4).toUInt().toLong()
+                                data.readInt32BE(pos + 4).toUInt().toLong()
                         if (offset >= threshold) {
                             val patched = offset + delta
                             int32BE((patched ushr 32).toInt()).copyInto(data, pos)

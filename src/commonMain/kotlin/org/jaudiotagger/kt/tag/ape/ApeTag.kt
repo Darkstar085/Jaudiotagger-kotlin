@@ -37,10 +37,12 @@ class ApeTag : Tag {
     // ---- string-keyed access (usable for custom/unmapped item names) ----
 
     fun firstRaw(id: String): String? =
-        items.filterIsInstance<ApeItem.Text>().firstOrNull { it.id.equals(id, ignoreCase = true) }?.value
+        items.filterIsInstance<ApeItem.Text>()
+            .firstOrNull { it.id.equals(id, ignoreCase = true) }?.value
 
     fun allRaw(id: String): List<String> =
-        items.filterIsInstance<ApeItem.Text>().filter { it.id.equals(id, ignoreCase = true) }.map { it.value }
+        items.filterIsInstance<ApeItem.Text>().filter { it.id.equals(id, ignoreCase = true) }
+            .map { it.value }
 
     fun addRaw(id: String, value: String) {
         items += ApeItem.Text(canonicalId(id), value)
@@ -109,7 +111,7 @@ class ApeTag : Tag {
 
     private fun isCoverArtId(id: String): Boolean =
         id.equals(ApeFieldKey.COVER_ART_FRONT.fieldName, ignoreCase = true) ||
-            id.equals(ApeFieldKey.COVER_ART_BACK.fieldName, ignoreCase = true)
+                id.equals(ApeFieldKey.COVER_ART_BACK.fieldName, ignoreCase = true)
 
     /** Cover item layout: descriptor (mime type or filename), NUL, image bytes. */
     private fun decodeCover(item: ApeItem.Binary): Artwork {

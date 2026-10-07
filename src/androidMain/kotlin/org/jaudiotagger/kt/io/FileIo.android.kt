@@ -2,11 +2,11 @@ package org.jaudiotagger.kt.io
 
 import android.system.ErrnoException
 import android.system.Os
+import kotlinx.io.files.Path
 import java.io.FileDescriptor
 import java.io.RandomAccessFile
 import java.nio.ByteBuffer
 import java.nio.channels.FileChannel
-import kotlinx.io.files.Path
 
 // NIO copies a heap buffer through a temporary direct buffer of the same size and caches it
 // per thread for the thread's lifetime; chunking caps that cache at this size.

@@ -1,8 +1,8 @@
 package org.jaudiotagger.kt.audio.mp4
 
 import org.jaudiotagger.kt.io.FileIo
-import org.jaudiotagger.kt.io.readFully
 import org.jaudiotagger.kt.io.decodeLatin1
+import org.jaudiotagger.kt.io.readFully
 import org.jaudiotagger.kt.io.readInt32BE
 import org.jaudiotagger.kt.io.readUInt16BE
 import org.jaudiotagger.kt.tag.mp4.Mp4Item

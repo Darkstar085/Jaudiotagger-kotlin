@@ -1,11 +1,5 @@
 package org.jaudiotagger.kt.flac
 
-import kotlin.test.Test
-import kotlin.test.assertEquals
-import kotlin.test.assertFalse
-import kotlin.test.assertIs
-import kotlin.test.assertTrue
-import kotlin.time.Duration.Companion.seconds
 import org.jaudiotagger.kt.AudioTagger
 import org.jaudiotagger.kt.audio.flac.FlacAudioProperties
 import org.jaudiotagger.kt.audio.flac.FlacInfoReader
@@ -13,6 +7,11 @@ import org.jaudiotagger.kt.io.withFileIo
 import org.jaudiotagger.kt.tag.FieldKey
 import org.jaudiotagger.kt.tag.flac.FlacTag
 import org.jaudiotagger.kt.testDataPath
+import kotlin.test.Test
+import kotlin.test.assertEquals
+import kotlin.test.assertFalse
+import kotlin.test.assertIs
+import kotlin.test.assertTrue
 
 /**
  * Expected values match the original jaudiotagger FlacHeaderTest for testdata/test.flac.

@@ -31,10 +31,10 @@ class FlacStreamInfo(val rawData: ByteArray) {
     /** Total inter-channel samples: 36 bits, low 4 bits of byte 13 plus bytes 14-17. */
     val totalSamples: Long =
         ((u(rawData[13]) and 0x0F).toLong() shl 32) or
-            (u(rawData[14]).toLong() shl 24) or
-            (u(rawData[15]).toLong() shl 16) or
-            (u(rawData[16]).toLong() shl 8) or
-            u(rawData[17]).toLong()
+                (u(rawData[14]).toLong() shl 24) or
+                (u(rawData[15]).toLong() shl 16) or
+                (u(rawData[16]).toLong() shl 8) or
+                u(rawData[17]).toLong()
 
     /** MD5 of the unencoded audio, hex encoded. */
     val md5: String = if (rawData.size >= 34) rawData.toHex(18, 16) else ""

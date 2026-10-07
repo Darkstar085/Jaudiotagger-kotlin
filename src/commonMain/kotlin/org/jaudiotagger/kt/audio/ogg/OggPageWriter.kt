@@ -88,7 +88,7 @@ internal object OggPageWriter {
             return ByteArray(1)
         }
         val size = length / OggPageHeader.MAXIMUM_SEGMENT_SIZE +
-            (if (length % OggPageHeader.MAXIMUM_SEGMENT_SIZE == 0 && !quitStream) 0 else 1)
+                (if (length % OggPageHeader.MAXIMUM_SEGMENT_SIZE == 0 && !quitStream) 0 else 1)
         val result = ByteArray(size)
         for (i in 0 until size - 1) {
             result[i] = 0xFF.toByte()

@@ -1,12 +1,14 @@
-# Jaudiotagger
+# Jaudiotagger Kotlin
 
-Jaudiotagger is an audio metadata library with a Kotlin Multiplatform implementation.
+Jaudiotagger Kotlin is a Kotlin Multiplatform audio metadata library.
 
 ## Kotlin Multiplatform
 
-The Kotlin Multiplatform implementation is the active library for Android, JVM, iOS, and macOS. Format logic is shared through `commonMain`, with platform-specific file I/O behind `FileIo`.
+The library targets Android, JVM, iOS, and macOS.
+Format logic is shared through `commonMain`, with platform-specific file I/O behind `FileIo`.
 
-Supported formats include MP3, FLAC, Ogg Vorbis, Ogg Opus, MP4/M4A, WAV, AIFF, WMA/ASF, Monkey's Audio, WavPack, DSF, DFF, and RealAudio.
+Supported formats include MP3, FLAC, Ogg Vorbis, Ogg Opus, MP4/M4A, WAV, AIFF, WMA/ASF, Monkey's
+Audio, WavPack, DSF, DFF, and RealAudio.
 
 ### Build
 
@@ -43,7 +45,8 @@ file.tag.set(FieldKey.TITLE, "New title")
 AudioTagger.write(Path("/music/track.flac"), file.tag)
 ```
 
-The implementation avoids runtime reflection and routes file access through `FileIo`, allowing Android MediaStore/SAF files to be edited in place through `FileDescriptorIo`.
+The implementation avoids runtime reflection and routes file access through `FileIo`, allowing
+Android MediaStore/SAF files to be edited in place through `FileDescriptorIo`.
 
 ## Project layout
 
@@ -59,5 +62,4 @@ The repository is Kotlin-first; the legacy Java implementation and Maven build h
 
 ## License
 
-Jaudiotagger is distributed under the GNU Lesser General Public License 2.1.
-See [LICENSE](LICENSE).
+Jaudiotagger Kotlin is distributed under the GNU Lesser General Public License 2.1. See [LICENSE](LICENSE).

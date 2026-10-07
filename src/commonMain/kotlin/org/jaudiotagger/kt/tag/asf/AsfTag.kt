@@ -57,14 +57,19 @@ class AsfTag : Tag {
     fun firstRaw(name: String): String? {
         legacyGet(name)?.let { return it }
         return internalDescriptors.firstNotNullOfOrNull { descriptor ->
-            if (descriptor.name.equals(name, ignoreCase = true)) descriptor.asStringValue()?.ifEmpty { null } else null
+            if (descriptor.name.equals(name, ignoreCase = true)) descriptor.asStringValue()
+                ?.ifEmpty { null } else null
         }
     }
 
     fun allRaw(name: String): List<String> {
         if (isLegacy(name)) return listOfNotNull(legacyGet(name))
         return internalDescriptors.mapNotNull { descriptor ->
-            if (descriptor.name.equals(name, ignoreCase = true)) descriptor.asStringValue() else null
+            if (descriptor.name.equals(
+                    name,
+                    ignoreCase = true
+                )
+            ) descriptor.asStringValue() else null
         }
     }
 
@@ -96,7 +101,7 @@ class AsfTag : Tag {
 
     override val fieldCount: Int
         get() = internalDescriptors.size +
-            listOf(title, author, copyright, description, rating).count { it.isNotEmpty() }
+                listOf(title, author, copyright, description, rating).count { it.isNotEmpty() }
 
     override val isEmpty: Boolean get() = fieldCount == 0
 
@@ -111,7 +116,10 @@ class AsfTag : Tag {
             .mapNotNull { decodePicture(it.content) }
 
     override fun addArtwork(artwork: Artwork) {
-        internalDescriptors += AsfMetadataDescriptor.binary(PICTURE_DESCRIPTOR, encodePicture(artwork))
+        internalDescriptors += AsfMetadataDescriptor.binary(
+            PICTURE_DESCRIPTOR,
+            encodePicture(artwork)
+        )
     }
 
     override fun clearArtworks() {
@@ -138,7 +146,8 @@ class AsfTag : Tag {
                     if (data[pos].toInt() == 0 && data[pos + 1].toInt() == 0) {
                         val chars = CharArray((pos - start) / 2)
                         for (i in chars.indices) {
-                            chars[i] = ((u(data[start + i * 2 + 1]) shl 8) or u(data[start + i * 2])).toChar()
+                            chars[i] =
+                                ((u(data[start + i * 2 + 1]) shl 8) or u(data[start + i * 2])).toChar()
                         }
                         pos += 2
                         return chars.concatToString()

@@ -1,9 +1,5 @@
 package org.jaudiotagger.kt.flac
 
-import kotlin.test.Test
-import kotlin.test.assertEquals
-import kotlin.test.assertIs
-import kotlin.test.assertTrue
 import kotlinx.io.files.SystemFileSystem
 import org.jaudiotagger.kt.AudioTagger
 import org.jaudiotagger.kt.audio.flac.FlacAudioProperties
@@ -11,6 +7,10 @@ import org.jaudiotagger.kt.copyToTemp
 import org.jaudiotagger.kt.tag.Artwork
 import org.jaudiotagger.kt.tag.FieldKey
 import org.jaudiotagger.kt.tag.flac.FlacTag
+import kotlin.test.Test
+import kotlin.test.assertEquals
+import kotlin.test.assertIs
+import kotlin.test.assertTrue
 
 class FlacWriteTest {
 
@@ -52,7 +52,10 @@ class FlacWriteTest {
         AudioTagger.write(path, tag)
 
         val newSize = SystemFileSystem.metadataOrNull(path)!!.size
-        assertTrue(newSize > originalSize + 190_000, "file should have grown, $originalSize -> $newSize")
+        assertTrue(
+            newSize > originalSize + 190_000,
+            "file should have grown, $originalSize -> $newSize"
+        )
 
         val reread = AudioTagger.read(path)
         assertEquals(200_000, reread.tag.first(FieldKey.LYRICS)!!.length)

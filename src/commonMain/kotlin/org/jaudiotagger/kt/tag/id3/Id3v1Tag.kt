@@ -90,5 +90,5 @@ class Id3v1Tag : Tag {
 
     override fun toString(): String =
         "Id3v1Tag(title=$title, artist=$artist, album=$album, year=$year, " +
-            "comment=$comment, genre=$genre, track=$track)"
+                "comment=$comment, genre=$genre, track=$track)"
 }

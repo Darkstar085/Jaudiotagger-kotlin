@@ -86,10 +86,10 @@ internal object FlacTagWriter {
         } else {
             // Does not fit: shift audio to make room, then write with default padding
             val audioStart = flacStream.startOfFlacInFile +
-                FlacStreamReader.FLAC_STREAM_IDENTIFIER_LENGTH +
-                MetadataBlockHeader.HEADER_LENGTH +
-                FlacStreamInfo.STREAM_INFO_DATA_LENGTH +
-                availableRoom
+                    FlacStreamReader.FLAC_STREAM_IDENTIFIER_LENGTH +
+                    MetadataBlockHeader.HEADER_LENGTH +
+                    FlacStreamInfo.STREAM_INFO_DATA_LENGTH +
+                    availableRoom
             val extraSpaceRequired = neededRoom + DEFAULT_PADDING - availableRoom
 
             io.position = audioStart
@@ -146,13 +146,23 @@ internal object FlacTagWriter {
         val vorbisData = VorbisCommentCodec.encode(tag.vorbisComment)
         val pictures = tag.artworks
         val vorbisIsLast = !blocksFollow && pictures.isEmpty()
-        buffer.write(MetadataBlockHeader(vorbisIsLast, BlockType.VORBIS_COMMENT, vorbisData.size).bytes(vorbisIsLast))
+        buffer.write(
+            MetadataBlockHeader(
+                vorbisIsLast,
+                BlockType.VORBIS_COMMENT,
+                vorbisData.size
+            ).bytes(vorbisIsLast)
+        )
         buffer.write(vorbisData)
 
         for ((index, picture) in pictures.withIndex()) {
             val pictureData = FlacPictureCodec.encode(picture)
             val isLast = !blocksFollow && index == pictures.lastIndex
-            buffer.write(MetadataBlockHeader(isLast, BlockType.PICTURE, pictureData.size).bytes(isLast))
+            buffer.write(
+                MetadataBlockHeader(isLast, BlockType.PICTURE, pictureData.size).bytes(
+                    isLast
+                )
+            )
             buffer.write(pictureData)
         }
         return buffer.readByteArray()

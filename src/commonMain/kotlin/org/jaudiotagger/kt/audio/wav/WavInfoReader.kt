@@ -1,12 +1,12 @@
 package org.jaudiotagger.kt.audio.wav
 
-import kotlin.time.Duration.Companion.seconds
 import org.jaudiotagger.kt.AudioProperties
 import org.jaudiotagger.kt.CannotReadException
 import org.jaudiotagger.kt.io.FileIo
 import org.jaudiotagger.kt.io.readFully
 import org.jaudiotagger.kt.io.readInt32LE
 import org.jaudiotagger.kt.io.readUInt16LE
+import kotlin.time.Duration.Companion.seconds
 
 /**
  * RIFF/WAVE chunk walking shared by the properties and tag readers.

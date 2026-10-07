@@ -14,3 +14,7 @@ Thumbs.db
 
 # Temporary test artifacts
 *.bak
+.gradle/
+.kotlin/
+build/
+local.properties

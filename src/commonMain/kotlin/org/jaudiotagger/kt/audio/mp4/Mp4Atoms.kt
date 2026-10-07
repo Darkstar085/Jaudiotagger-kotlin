@@ -2,8 +2,8 @@ package org.jaudiotagger.kt.audio.mp4
 
 import org.jaudiotagger.kt.CannotReadException
 import org.jaudiotagger.kt.io.FileIo
-import org.jaudiotagger.kt.io.readFully
 import org.jaudiotagger.kt.io.decodeLatin1
+import org.jaudiotagger.kt.io.readFully
 import org.jaudiotagger.kt.io.readInt32BE
 
 /**
@@ -40,7 +40,7 @@ internal object Mp4Atoms {
             if (size == 1L) {
                 val large = io.readFully(8)
                 size = (large.readInt32BE(0).toUInt().toLong() shl 32) or
-                    large.readInt32BE(4).toUInt().toLong()
+                        large.readInt32BE(4).toUInt().toLong()
                 dataStart += 8
             } else if (size == 0L) {
                 size = end - position
@@ -73,5 +73,6 @@ internal object Mp4Atoms {
     }
 
     fun requirePath(io: FileIo, vararg path: String): AtomInfo =
-        findPath(io, *path) ?: throw CannotReadException("This file does not appear to be an audio file")
+        findPath(io, *path)
+            ?: throw CannotReadException("This file does not appear to be an audio file")
 }

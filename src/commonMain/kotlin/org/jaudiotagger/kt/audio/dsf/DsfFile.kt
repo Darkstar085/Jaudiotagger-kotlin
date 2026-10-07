@@ -1,19 +1,16 @@
 package org.jaudiotagger.kt.audio.dsf
 
-import kotlin.time.Duration.Companion.seconds
 import kotlinx.io.Buffer
 import kotlinx.io.readByteArray
 import org.jaudiotagger.kt.AudioProperties
 import org.jaudiotagger.kt.CannotReadException
-import org.jaudiotagger.kt.CannotWriteException
 import org.jaudiotagger.kt.io.FileIo
 import org.jaudiotagger.kt.io.readFully
 import org.jaudiotagger.kt.io.readInt32LE
-import org.jaudiotagger.kt.io.u
 import org.jaudiotagger.kt.tag.id3.Id3v2Tag
 import org.jaudiotagger.kt.tag.id3.Id3v2TagReader
 import org.jaudiotagger.kt.tag.id3.Id3v2TagWriter
-import org.jaudiotagger.kt.tag.id3.Id3v2Version
+import kotlin.time.Duration.Companion.seconds
 
 /**
  * DSF (DSD Stream File): a "DSD " header chunk pointing to an optional ID3v2
@@ -21,7 +18,8 @@ import org.jaudiotagger.kt.tag.id3.Id3v2Version
  */
 internal object DsfFile {
 
-    private const val DSD_HEADER_LENGTH = 28 // "DSD " + chunkSize(8) + fileLength(8) + metadataOffset(8)
+    private const val DSD_HEADER_LENGTH =
+        28 // "DSD " + chunkSize(8) + fileLength(8) + metadataOffset(8)
     private const val FMT_HEADER_LENGTH = 12 // "fmt " + chunkSize(8)
 
     private class DsdChunk(val chunkSize: Long, val fileLength: Long, val metadataOffset: Long)
@@ -29,7 +27,8 @@ internal object DsfFile {
     private fun ByteArray.readInt64LE(offset: Int): Long =
         (readInt32LE(offset).toUInt().toLong()) or (readInt32LE(offset + 4).toLong() shl 32)
 
-    private fun int64LE(value: Long): ByteArray = ByteArray(8) { i -> (value ushr (8 * i)).toByte() }
+    private fun int64LE(value: Long): ByteArray =
+        ByteArray(8) { i -> (value ushr (8 * i)).toByte() }
 
     private fun readDsdChunk(io: FileIo): DsdChunk {
         io.position = 0

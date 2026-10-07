@@ -1,10 +1,10 @@
 package org.jaudiotagger.kt.audio.mp3
 
-import kotlin.time.Duration.Companion.seconds
 import org.jaudiotagger.kt.AudioException
 import org.jaudiotagger.kt.CannotReadException
 import org.jaudiotagger.kt.audio.id3.Id3v2Detector
 import org.jaudiotagger.kt.io.FileIo
+import kotlin.time.Duration.Companion.seconds
 
 /**
  * Finds the first MPEG audio frame (skipping a leading ID3v2 tag and any
@@ -86,10 +86,13 @@ internal object Mp3InfoReader {
         val numberOfFrames = when {
             xingFrame != null && xingFrame.isFrameCountPresent && xingFrame.frameCount > 0 ->
                 xingFrame.frameCount.toLong()
+
             vbriFrame != null && vbriFrame.frameCount > 0 ->
                 vbriFrame.frameCount.toLong()
+
             xingFrame != null || vbriFrame != null ->
                 estimateFrameCountAfterVbrHeader(io, headerPosition, header, fileSize)
+
             else ->
                 (fileSize - headerPosition) / frameLength
         }
@@ -168,8 +171,9 @@ internal object Mp3InfoReader {
         vbrFrame: MpegFrameHeader,
         fileSize: Long,
     ): Long {
-        val audioFrame = findFirstStableAudioFrameAfterVbrHeader(io, vbrFrameStart, vbrFrame, fileSize)
-            ?: return (fileSize - vbrFrameStart) / vbrFrame.frameLength
+        val audioFrame =
+            findFirstStableAudioFrameAfterVbrHeader(io, vbrFrameStart, vbrFrame, fileSize)
+                ?: return (fileSize - vbrFrameStart) / vbrFrame.frameLength
         val audioFrameStart = audioFrame.first
         val audioHeader = audioFrame.second
         return (fileSize - audioFrameStart) / audioHeader.frameLength
@@ -220,9 +224,9 @@ internal object Mp3InfoReader {
         val nextHeader = peekFrameHeaderAfter(io, window, windowStart, index, header.frameLength)
             ?: return false
         return nextHeader.bitRate == header.bitRate &&
-            nextHeader.version == header.version &&
-            nextHeader.layer == header.layer &&
-            nextHeader.samplingRate == header.samplingRate
+                nextHeader.version == header.version &&
+                nextHeader.layer == header.layer &&
+                nextHeader.samplingRate == header.samplingRate
     }
 
     private fun peekFrameHeaderAfter(

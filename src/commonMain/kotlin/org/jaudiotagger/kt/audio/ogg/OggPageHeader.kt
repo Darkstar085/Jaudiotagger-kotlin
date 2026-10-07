@@ -29,7 +29,8 @@ class OggPageHeader(val rawHeaderData: ByteArray) {
     val pageSequence: Int = rawHeaderData.readInt32LE(FIELD_PAGE_SEQUENCE_NO_POS)
     val checksum: Int = rawHeaderData.readInt32LE(FIELD_PAGE_CHECKSUM_POS)
 
-    val segmentTable: ByteArray = rawHeaderData.copyOfRange(OGG_PAGE_HEADER_FIXED_LENGTH, rawHeaderData.size)
+    val segmentTable: ByteArray =
+        rawHeaderData.copyOfRange(OGG_PAGE_HEADER_FIXED_LENGTH, rawHeaderData.size)
 
     /** Total size of the page data following this header. */
     val pageLength: Int
@@ -73,7 +74,7 @@ class OggPageHeader(val rawHeaderData: ByteArray) {
 
     override fun toString(): String =
         "OggPageHeader(type:$headerType length:$pageLength seq:$pageSequence " +
-            "packets:${packetList.size} incomplete:$isLastPacketIncomplete serial:$streamSerialNumber)"
+                "packets:${packetList.size} incomplete:$isLastPacketIncomplete serial:$streamSerialNumber)"
 
     class PacketStartAndLength(val startPosition: Int, val length: Int) {
         override fun toString(): String = "Pkt(start:$startPosition:length:$length)"
@@ -87,12 +88,14 @@ class OggPageHeader(val rawHeaderData: ByteArray) {
     }
 
     companion object {
-        val CAPTURE_PATTERN = byteArrayOf('O'.code.toByte(), 'g'.code.toByte(), 'g'.code.toByte(), 'S'.code.toByte())
+        val CAPTURE_PATTERN =
+            byteArrayOf('O'.code.toByte(), 'g'.code.toByte(), 'g'.code.toByte(), 'S'.code.toByte())
 
         const val OGG_PAGE_HEADER_FIXED_LENGTH = 27
         const val MAXIMUM_NO_OF_SEGMENT_SIZE = 255
         const val MAXIMUM_SEGMENT_SIZE = 255
-        const val MAXIMUM_PAGE_HEADER_SIZE = OGG_PAGE_HEADER_FIXED_LENGTH + MAXIMUM_NO_OF_SEGMENT_SIZE
+        const val MAXIMUM_PAGE_HEADER_SIZE =
+            OGG_PAGE_HEADER_FIXED_LENGTH + MAXIMUM_NO_OF_SEGMENT_SIZE
         const val MAXIMUM_PAGE_DATA_SIZE = MAXIMUM_NO_OF_SEGMENT_SIZE * MAXIMUM_SEGMENT_SIZE
         const val MAXIMUM_PAGE_SIZE = MAXIMUM_PAGE_HEADER_SIZE + MAXIMUM_PAGE_DATA_SIZE
 

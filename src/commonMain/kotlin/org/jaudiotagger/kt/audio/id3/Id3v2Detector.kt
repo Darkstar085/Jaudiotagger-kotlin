@@ -30,7 +30,8 @@ internal object Id3v2Detector {
         }
 
         // bytes 6..9: tag size as a 28-bit synchsafe integer
-        val size = (u(header[6]) shl 21) or (u(header[7]) shl 14) or (u(header[8]) shl 7) or u(header[9])
+        val size =
+            (u(header[6]) shl 21) or (u(header[7]) shl 14) or (u(header[8]) shl 7) or u(header[9])
         io.position = start + TAG_HEADER_LENGTH + size
         return true
     }

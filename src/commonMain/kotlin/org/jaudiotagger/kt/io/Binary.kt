@@ -14,11 +14,11 @@ internal fun ByteArray.readUInt24BE(offset: Int): Int =
 
 internal fun ByteArray.readInt32BE(offset: Int): Int =
     (u(this[offset]) shl 24) or (u(this[offset + 1]) shl 16) or
-        (u(this[offset + 2]) shl 8) or u(this[offset + 3])
+            (u(this[offset + 2]) shl 8) or u(this[offset + 3])
 
 internal fun ByteArray.readInt32LE(offset: Int): Int =
     u(this[offset]) or (u(this[offset + 1]) shl 8) or
-        (u(this[offset + 2]) shl 16) or (u(this[offset + 3]) shl 24)
+            (u(this[offset + 2]) shl 16) or (u(this[offset + 3]) shl 24)
 
 internal fun int32BE(value: Int): ByteArray = byteArrayOf(
     (value ushr 24).toByte(),

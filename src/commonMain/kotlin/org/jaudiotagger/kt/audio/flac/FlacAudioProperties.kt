@@ -1,7 +1,7 @@
 package org.jaudiotagger.kt.audio.flac
 
-import kotlin.time.Duration
 import org.jaudiotagger.kt.AudioProperties
+import kotlin.time.Duration
 
 class FlacAudioProperties(
     encodingType: String,

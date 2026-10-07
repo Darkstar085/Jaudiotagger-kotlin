@@ -34,7 +34,8 @@ internal class XingFrame private constructor(buffer: ByteArray) {
         if (buffer.size >= XING_HEADER_SIZE + LAME_HEADER_SIZE) {
             val id = buffer.decodeToString(XING_HEADER_SIZE, XING_HEADER_SIZE + 4)
             if (id == "LAME") {
-                encoder = buffer.decodeToString(XING_HEADER_SIZE, XING_HEADER_SIZE + LAME_ENCODER_SIZE)
+                encoder =
+                    buffer.decodeToString(XING_HEADER_SIZE, XING_HEADER_SIZE + LAME_ENCODER_SIZE)
             }
         }
     }
@@ -56,10 +57,14 @@ internal class XingFrame private constructor(buffer: ByteArray) {
          * Checks for a Xing/Info header inside the frame starting at [frameOffset]
          * and parses it when present.
          */
-        fun parseIfPresent(buffer: ByteArray, frameOffset: Int, header: MpegFrameHeader): XingFrame? {
+        fun parseIfPresent(
+            buffer: ByteArray,
+            frameOffset: Int,
+            header: MpegFrameHeader
+        ): XingFrame? {
             val offset = frameOffset + when {
                 header.version == MpegFrameHeader.VERSION_1 &&
-                    header.channelMode == MpegFrameHeader.MODE_MONO -> MPEG_VERSION_1_MODE_MONO_OFFSET
+                        header.channelMode == MpegFrameHeader.MODE_MONO -> MPEG_VERSION_1_MODE_MONO_OFFSET
 
                 header.version == MpegFrameHeader.VERSION_1 -> MPEG_VERSION_1_MODE_STEREO_OFFSET
 

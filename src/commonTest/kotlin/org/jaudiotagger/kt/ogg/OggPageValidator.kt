@@ -1,12 +1,12 @@
 package org.jaudiotagger.kt.ogg
 
-import kotlin.test.assertEquals
-import kotlin.test.assertTrue
 import kotlinx.io.files.Path
 import org.jaudiotagger.kt.audio.ogg.OggCrc
 import org.jaudiotagger.kt.audio.ogg.OggPageHeader
 import org.jaudiotagger.kt.io.readFully
 import org.jaudiotagger.kt.io.withFileIo
+import kotlin.test.assertEquals
+import kotlin.test.assertTrue
 
 /**
  * Walks every page of an Ogg file asserting structural invariants:

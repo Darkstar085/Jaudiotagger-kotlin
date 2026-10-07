@@ -1,11 +1,11 @@
 package org.jaudiotagger.kt.tag.vorbiscomment
 
-import kotlin.io.encoding.Base64
-import kotlin.io.encoding.ExperimentalEncodingApi
 import org.jaudiotagger.kt.audio.flac.FlacPictureCodec
 import org.jaudiotagger.kt.tag.Artwork
 import org.jaudiotagger.kt.tag.FieldKey
 import org.jaudiotagger.kt.tag.Tag
+import kotlin.io.encoding.Base64
+import kotlin.io.encoding.ExperimentalEncodingApi
 
 /**
  * A single `NAME=value` comment. Names are case-insensitive; the original spelling is
@@ -56,7 +56,8 @@ class VorbisCommentTag(
     }
 
     fun allRaw(id: String): List<String> {
-        return fields.filter { field -> field.id.equals(id, ignoreCase = true) }.map { field -> field.value }
+        return fields.filter { field -> field.id.equals(id, ignoreCase = true) }
+            .map { field -> field.value }
     }
 
     fun addRaw(id: String, value: String) {
@@ -110,6 +111,7 @@ class VorbisCommentTag(
                 setRaw(VorbisCommentFieldKey.ALBUMARTIST.fieldName, value)
                 removeRaw(VorbisCommentFieldKey.ALBUMARTIST_JRIVER.fieldName)
             }
+
             FieldKey.TRACK -> setNumber(TRACK_FIELDS, value)
             FieldKey.DISC_NO -> setNumber(DISC_FIELDS, value)
             FieldKey.TRACK_TOTAL -> setTotal(TRACK_FIELDS, value)
@@ -137,6 +139,7 @@ class VorbisCommentTag(
                 removeRaw(VorbisCommentFieldKey.ALBUMARTIST.fieldName)
                 removeRaw(VorbisCommentFieldKey.ALBUMARTIST_JRIVER.fieldName)
             }
+
             FieldKey.TRACK -> removeNumber(TRACK_FIELDS)
             FieldKey.DISC_NO -> removeNumber(DISC_FIELDS)
             FieldKey.TRACK_TOTAL -> removeTotal(TRACK_FIELDS)

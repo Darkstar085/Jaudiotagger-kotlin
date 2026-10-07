@@ -1,6 +1,5 @@
 package org.jaudiotagger.kt.audio.mp4
 
-import kotlin.time.Duration.Companion.seconds
 import org.jaudiotagger.kt.AudioProperties
 import org.jaudiotagger.kt.CannotReadException
 import org.jaudiotagger.kt.io.FileIo
@@ -8,6 +7,7 @@ import org.jaudiotagger.kt.io.readFully
 import org.jaudiotagger.kt.io.readInt32BE
 import org.jaudiotagger.kt.io.readUInt16BE
 import org.jaudiotagger.kt.io.u
+import kotlin.time.Duration.Companion.seconds
 
 /**
  * Reads MP4 audio properties from moov: duration from mvhd, sample rate and
@@ -32,7 +32,7 @@ internal object Mp4InfoReader {
         if (version == 1) {
             timescale = mvhdData.readInt32BE(20).toUInt().toLong()
             duration = (mvhdData.readInt32BE(24).toUInt().toLong() shl 32) or
-                mvhdData.readInt32BE(28).toUInt().toLong()
+                    mvhdData.readInt32BE(28).toUInt().toLong()
         } else {
             timescale = mvhdData.readInt32BE(12).toUInt().toLong()
             duration = mvhdData.readInt32BE(16).toUInt().toLong()
@@ -66,7 +66,8 @@ internal object Mp4InfoReader {
                         }
                         isLossless = entry.id == "alac"
                         if (entry.id == "mp4a") {
-                            val esds = Mp4Atoms.findChild(io, entry.dataStart + 28, entry.dataEnd, "esds")
+                            val esds =
+                                Mp4Atoms.findChild(io, entry.dataStart + 28, entry.dataEnd, "esds")
                             if (esds != null) {
                                 bitRate = readEsdsAvgBitrate(io, esds) / 1000
                             }

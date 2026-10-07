@@ -149,22 +149,41 @@ internal object Id3v2TagReader {
             id == "WXXX" || id == "WXX" -> {
                 val encoding = Id3TextEncoding.fromId(u(data[0]))
                 val (description, next) = readNulTerminated(data, 1, encoding)
-                Id3v2Frame.UserUrl(id, description, Id3TextEncoding.ISO_8859_1.decode(data, next).trimNul())
+                Id3v2Frame.UserUrl(
+                    id,
+                    description,
+                    Id3TextEncoding.ISO_8859_1.decode(data, next).trimNul()
+                )
             }
 
             id == "COMM" || id == "COM" || id == "USLT" || id == "ULT" -> {
                 val encoding = Id3TextEncoding.fromId(u(data[0]))
                 val language = Id3TextEncoding.ISO_8859_1.decode(data, 1, minOf(4, data.size))
                 val (description, next) = readNulTerminated(data, 4, encoding)
-                Id3v2Frame.LanguageText(id, language, description, encoding.decode(data, next).trimNul())
+                Id3v2Frame.LanguageText(
+                    id,
+                    language,
+                    description,
+                    encoding.decode(data, next).trimNul()
+                )
             }
 
             id == "APIC" && !isV22 -> {
                 val encoding = Id3TextEncoding.fromId(u(data[0]))
                 val (mimeType, afterMime) = readNulTerminated(data, 1, Id3TextEncoding.ISO_8859_1)
                 val pictureType = u(data[afterMime])
-                val (description, afterDescription) = readNulTerminated(data, afterMime + 1, encoding)
-                Id3v2Frame.Picture(id, mimeType, pictureType, description, data.copyOfRange(afterDescription, data.size))
+                val (description, afterDescription) = readNulTerminated(
+                    data,
+                    afterMime + 1,
+                    encoding
+                )
+                Id3v2Frame.Picture(
+                    id,
+                    mimeType,
+                    pictureType,
+                    description,
+                    data.copyOfRange(afterDescription, data.size)
+                )
             }
 
             id == "PIC" && isV22 -> {
@@ -179,7 +198,13 @@ internal object Id3v2TagReader {
                     "BMP" -> "image/bmp"
                     else -> imageFormat
                 }
-                Id3v2Frame.Picture(id, mimeType, pictureType, description, data.copyOfRange(afterDescription, data.size))
+                Id3v2Frame.Picture(
+                    id,
+                    mimeType,
+                    pictureType,
+                    description,
+                    data.copyOfRange(afterDescription, data.size)
+                )
             }
 
             id == "UFID" || id == "UFI" -> {
@@ -231,7 +256,11 @@ internal object Id3v2TagReader {
     }
 
     /** Reads a NUL-terminated string; returns the string and the index past the terminator. */
-    private fun readNulTerminated(data: ByteArray, from: Int, encoding: Id3TextEncoding): Pair<String, Int> {
+    private fun readNulTerminated(
+        data: ByteArray,
+        from: Int,
+        encoding: Id3TextEncoding
+    ): Pair<String, Int> {
         val width = encoding.nulWidth
         var i = from
         while (i + width <= data.size) {
@@ -250,7 +279,11 @@ internal object Id3v2TagReader {
     }
 
     /** Splits the remainder of a text frame into NUL-separated values. */
-    private fun splitNulSeparated(data: ByteArray, from: Int, encoding: Id3TextEncoding): List<String> {
+    private fun splitNulSeparated(
+        data: ByteArray,
+        from: Int,
+        encoding: Id3TextEncoding
+    ): List<String> {
         val values = mutableListOf<String>()
         var start = from
         while (start < data.size) {
@@ -268,7 +301,7 @@ internal object Id3v2TagReader {
 
     private fun synchsafeToInt(data: ByteArray, offset: Int): Int =
         (u(data[offset]) shl 21) or (u(data[offset + 1]) shl 14) or
-            (u(data[offset + 2]) shl 7) or u(data[offset + 3])
+                (u(data[offset + 2]) shl 7) or u(data[offset + 3])
 
     /** Reverses unsynchronization: every $FF 00 becomes $FF. */
     private fun removeUnsynchronization(data: ByteArray): ByteArray {

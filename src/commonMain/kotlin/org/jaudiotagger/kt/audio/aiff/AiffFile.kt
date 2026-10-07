@@ -1,7 +1,5 @@
 package org.jaudiotagger.kt.audio.aiff
 
-import kotlin.math.pow
-import kotlin.time.Duration.Companion.seconds
 import kotlinx.io.Buffer
 import kotlinx.io.readByteArray
 import org.jaudiotagger.kt.AudioProperties
@@ -15,6 +13,8 @@ import org.jaudiotagger.kt.io.u
 import org.jaudiotagger.kt.tag.id3.Id3v2Tag
 import org.jaudiotagger.kt.tag.id3.Id3v2TagReader
 import org.jaudiotagger.kt.tag.id3.Id3v2TagWriter
+import kotlin.math.pow
+import kotlin.time.Duration.Companion.seconds
 
 /**
  * AIFF/AIFC: big-endian IFF chunks inside a FORM container. Properties come
@@ -179,7 +179,10 @@ internal object AiffFile {
         val regions = mutableListOf<Pair<Long, Long>>()
         forEachChunk(io) { chunk ->
             if (chunk.id == "ID3 ") {
-                regions += (chunk.dataStart - CHUNK_HEADER_LENGTH) to minOf(chunk.paddedEnd, io.size)
+                regions += (chunk.dataStart - CHUNK_HEADER_LENGTH) to minOf(
+                    chunk.paddedEnd,
+                    io.size
+                )
             }
         }
         for ((start, end) in regions.asReversed()) {

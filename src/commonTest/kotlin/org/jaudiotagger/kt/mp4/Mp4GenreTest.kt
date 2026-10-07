@@ -1,9 +1,5 @@
 package org.jaudiotagger.kt.mp4
 
-import kotlin.test.Test
-import kotlin.test.assertEquals
-import kotlin.test.assertIs
-import kotlin.test.assertTrue
 import kotlinx.io.files.SystemFileSystem
 import org.jaudiotagger.kt.AudioTagger
 import org.jaudiotagger.kt.copyToTemp
@@ -11,6 +7,10 @@ import org.jaudiotagger.kt.tag.FieldKey
 import org.jaudiotagger.kt.tag.id3.GenreTypes
 import org.jaudiotagger.kt.tag.mp4.Mp4Item
 import org.jaudiotagger.kt.tag.mp4.Mp4Tag
+import kotlin.test.Test
+import kotlin.test.assertEquals
+import kotlin.test.assertIs
+import kotlin.test.assertTrue
 
 class Mp4GenreTest {
 
@@ -26,7 +26,10 @@ class Mp4GenreTest {
         AudioTagger.write(path, edited)
 
         val reread = AudioTagger.read(path).tag as Mp4Tag
-        assertTrue(reread.items.any { it is Mp4Item.Genre }, "gnre must stay a gnre atom after rewrite")
+        assertTrue(
+            reread.items.any { it is Mp4Item.Genre },
+            "gnre must stay a gnre atom after rewrite"
+        )
         assertEquals("Rock", reread.first(FieldKey.GENRE))
 
         SystemFileSystem.delete(path)

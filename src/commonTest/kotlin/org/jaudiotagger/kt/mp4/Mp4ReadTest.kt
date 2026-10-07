@@ -1,14 +1,14 @@
 package org.jaudiotagger.kt.mp4
 
-import kotlin.test.Test
-import kotlin.test.assertEquals
-import kotlin.test.assertIs
-import kotlin.test.assertTrue
 import kotlinx.io.files.SystemFileSystem
 import org.jaudiotagger.kt.AudioTagger
 import org.jaudiotagger.kt.tag.FieldKey
 import org.jaudiotagger.kt.tag.mp4.Mp4Tag
 import org.jaudiotagger.kt.testDataPath
+import kotlin.test.Test
+import kotlin.test.assertEquals
+import kotlin.test.assertIs
+import kotlin.test.assertTrue
 
 /**
  * Expected values match the original M4aReadTagTest for testdata/test.m4a.
@@ -34,7 +34,15 @@ class Mp4ReadTest {
 
     @Test
     fun readSamplesSmoke() {
-        for (sample in listOf("test.m4a", "test2.m4a", "test3.m4a", "test4.m4a", "test5.m4a", "test8.m4a", "test164.m4a")) {
+        for (sample in listOf(
+            "test.m4a",
+            "test2.m4a",
+            "test3.m4a",
+            "test4.m4a",
+            "test5.m4a",
+            "test8.m4a",
+            "test164.m4a"
+        )) {
             if (SystemFileSystem.metadataOrNull(testDataPath(sample)) == null) continue
             val file = AudioTagger.read(testDataPath(sample))
             assertTrue(file.properties.sampleRate > 0, sample)

@@ -1,20 +1,20 @@
 package org.jaudiotagger.kt.mp3
 
+import kotlinx.io.files.Path
+import kotlinx.io.files.SystemFileSystem
+import org.jaudiotagger.kt.AudioTagger
+import org.jaudiotagger.kt.audio.id3.Id3v2Detector
+import org.jaudiotagger.kt.audio.mp3.Mp3AudioProperties
+import org.jaudiotagger.kt.audio.mp3.MpegFrameHeader
+import org.jaudiotagger.kt.copyToTemp
+import org.jaudiotagger.kt.io.openFileIo
+import org.jaudiotagger.kt.io.readFully
+import org.jaudiotagger.kt.testDataPath
 import kotlin.math.abs
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertIs
 import kotlin.test.assertTrue
-import kotlinx.io.files.Path
-import kotlinx.io.files.SystemFileSystem
-import org.jaudiotagger.kt.AudioTagger
-import org.jaudiotagger.kt.audio.id3.Id3v2Detector
-import org.jaudiotagger.kt.audio.mp3.MpegFrameHeader
-import org.jaudiotagger.kt.audio.mp3.Mp3AudioProperties
-import org.jaudiotagger.kt.copyToTemp
-import org.jaudiotagger.kt.io.openFileIo
-import org.jaudiotagger.kt.io.readFully
-import org.jaudiotagger.kt.testDataPath
 
 class Mp3FrameLengthTest {
 
@@ -83,7 +83,10 @@ class Mp3FrameLengthTest {
                 if (isApeTagAt(io, offset)) return
                 io.position = offset
                 val headerBytes = io.readFully(MpegFrameHeader.HEADER_SIZE)
-                assertTrue(MpegFrameHeader.isMpegFrame(headerBytes, 0), "$label: lost sync at $offset")
+                assertTrue(
+                    MpegFrameHeader.isMpegFrame(headerBytes, 0),
+                    "$label: lost sync at $offset"
+                )
                 val header = MpegFrameHeader.parse(headerBytes, 0)
                 val frameLength = header.frameLength
                 assertTrue(frameLength > 0, "$label: invalid frame length at $offset")
@@ -93,7 +96,11 @@ class Mp3FrameLengthTest {
         }
     }
 
-    private fun isId3v1TagAt(io: org.jaudiotagger.kt.io.FileIo, offset: Long, fileSize: Long): Boolean {
+    private fun isId3v1TagAt(
+        io: org.jaudiotagger.kt.io.FileIo,
+        offset: Long,
+        fileSize: Long
+    ): Boolean {
         if (fileSize - offset != 128L) return false
         io.position = offset
         val tag = io.readFully(3)

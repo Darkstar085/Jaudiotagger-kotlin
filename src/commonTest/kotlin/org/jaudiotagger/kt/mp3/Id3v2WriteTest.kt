@@ -1,9 +1,5 @@
 package org.jaudiotagger.kt.mp3
 
-import kotlin.test.Test
-import kotlin.test.assertEquals
-import kotlin.test.assertIs
-import kotlin.test.assertTrue
 import kotlinx.io.files.SystemFileSystem
 import org.jaudiotagger.kt.AudioTagger
 import org.jaudiotagger.kt.audio.mp3.Mp3AudioProperties
@@ -12,6 +8,10 @@ import org.jaudiotagger.kt.tag.Artwork
 import org.jaudiotagger.kt.tag.FieldKey
 import org.jaudiotagger.kt.tag.id3.Id3v2Tag
 import org.jaudiotagger.kt.tag.id3.Id3v2Version
+import kotlin.test.Test
+import kotlin.test.assertEquals
+import kotlin.test.assertIs
+import kotlin.test.assertTrue
 
 class Id3v2WriteTest {
 
@@ -32,7 +32,11 @@ class Id3v2WriteTest {
         tag.set(FieldKey.MUSICBRAINZ_RELEASEID, "1234-5678")
         AudioTagger.write(path, tag)
 
-        assertEquals(originalSize, SystemFileSystem.metadataOrNull(path)!!.size, "must reuse padding")
+        assertEquals(
+            originalSize,
+            SystemFileSystem.metadataOrNull(path)!!.size,
+            "must reuse padding"
+        )
         val reread = AudioTagger.read(path)
         assertEquals("New Title", reread.tag.first(FieldKey.TITLE))
         assertEquals("Billy Talent", reread.tag.first(FieldKey.ARTIST))

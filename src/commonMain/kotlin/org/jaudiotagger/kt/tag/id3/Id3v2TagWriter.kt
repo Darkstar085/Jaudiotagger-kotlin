@@ -34,7 +34,8 @@ internal object Id3v2TagWriter {
         if (header[0] != 'I'.code.toByte() || header[1] != 'D'.code.toByte() || header[2] != '3'.code.toByte()) {
             return 0
         }
-        val size = (u(header[6]) shl 21) or (u(header[7]) shl 14) or (u(header[8]) shl 7) or u(header[9])
+        val size =
+            (u(header[6]) shl 21) or (u(header[7]) shl 14) or (u(header[8]) shl 7) or u(header[9])
         val hasFooter = (u(header[5]) and 0x10) != 0
         return HEADER_LENGTH.toLong() + size + (if (hasFooter) HEADER_LENGTH else 0)
     }
@@ -70,7 +71,11 @@ internal object Id3v2TagWriter {
         return encodeWithHeader(tag.version, body, totalSize)
     }
 
-    private fun encodeWithHeader(version: Id3v2Version, body: ByteArray, totalSize: Int): ByteArray {
+    private fun encodeWithHeader(
+        version: Id3v2Version,
+        body: ByteArray,
+        totalSize: Int
+    ): ByteArray {
         val declaredSize = totalSize - HEADER_LENGTH
         val out = ByteArray(totalSize) // trailing padding stays zero
         byteArrayOf(

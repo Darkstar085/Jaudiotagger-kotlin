@@ -1,10 +1,10 @@
 package org.jaudiotagger.kt.dsf
 
+import org.jaudiotagger.kt.AudioTagger
+import org.jaudiotagger.kt.testDataPath
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
-import org.jaudiotagger.kt.AudioTagger
-import org.jaudiotagger.kt.testDataPath
 
 class DffTest {
 

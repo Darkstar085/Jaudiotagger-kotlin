@@ -23,7 +23,7 @@ internal class MpegFrameHeader private constructor(private val bytes: ByteArray)
 
     init {
         val bitRateIndex = (u(bytes[2]) and MASK_BITRATE) or
-            (bytes[1].toInt() and MASK_ID) or (bytes[1].toInt() and MASK_LAYER)
+                (bytes[1].toInt() and MASK_ID) or (bytes[1].toInt() and MASK_LAYER)
         bitRate = bitrateMap[bitRateIndex] ?: throw InvalidTagDataException("Invalid bitrate")
 
         if (version !in versionNames) throw InvalidTagDataException("Invalid mpeg version")
@@ -154,8 +154,8 @@ internal class MpegFrameHeader private constructor(private val bytes: ByteArray)
         /** Quick sync check: 11 set bits and a valid sampling-rate field. */
         fun isMpegFrame(buffer: ByteArray, offset: Int): Boolean =
             (u(buffer[offset]) and 0xFF) == 0xFF &&
-                (u(buffer[offset + 1]) and 0xE0) == 0xE0 &&
-                (u(buffer[offset + 2]) and 0xFC) != 0xFC
+                    (u(buffer[offset + 1]) and 0xE0) == 0xE0 &&
+                    (u(buffer[offset + 2]) and 0xFC) != 0xFC
 
         fun parse(buffer: ByteArray, offset: Int): MpegFrameHeader =
             MpegFrameHeader(buffer.copyOfRange(offset, offset + HEADER_SIZE))

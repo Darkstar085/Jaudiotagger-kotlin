@@ -1,6 +1,5 @@
 package org.jaudiotagger.kt.audio.wavpack
 
-import kotlin.time.Duration.Companion.seconds
 import org.jaudiotagger.kt.AudioProperties
 import org.jaudiotagger.kt.CannotReadException
 import org.jaudiotagger.kt.io.FileIo
@@ -8,6 +7,7 @@ import org.jaudiotagger.kt.io.readFully
 import org.jaudiotagger.kt.io.readInt32LE
 import org.jaudiotagger.kt.io.readUInt16LE
 import org.jaudiotagger.kt.io.u
+import kotlin.time.Duration.Companion.seconds
 
 /**
  * Reads audio properties from WavPack ("wvpk") block headers.
@@ -28,13 +28,16 @@ internal object WavPackInfoReader {
 
     fun read(io: FileIo): AudioProperties {
         io.position = 0
-        val header = locateAudioBlock(io) ?: throw CannotReadException("Unable to locate WavPack audio block")
+        val header = locateAudioBlock(io)
+            ?: throw CannotReadException("Unable to locate WavPack audio block")
 
         val metadata = readMetadata(io, header)
         val hybrid = header.isHybridMode
-        val channels = if (metadata.channelCount > 0) metadata.channelCount else if (header.isMono) 1 else 2
+        val channels =
+            if (metadata.channelCount > 0) metadata.channelCount else if (header.isMono) 1 else 2
         var bitsPerSample = header.bitsPerSample
-        var sampleRate = if (metadata.sampleRate > 0) metadata.sampleRate else header.sampleRateFromFlags
+        var sampleRate =
+            if (metadata.sampleRate > 0) metadata.sampleRate else header.sampleRateFromFlags
         if (header.isDsd) {
             // DSD stores one bit per sample; players expect the familiar 2.8+ MHz rate
             sampleRate *= 4

@@ -15,7 +15,8 @@ internal object AsfTagConverter {
     }
 
     fun distributeMetadata(tag: AsfTag): Distribution {
-        val buckets = AsfContainerType.distributionOrder.associateWith { mutableListOf<AsfMetadataDescriptor>() }
+        val buckets =
+            AsfContainerType.distributionOrder.associateWith { mutableListOf<AsfMetadataDescriptor>() }
         for (descriptor in tag.internalDescriptors) {
             val highest = AsfFieldContainers.highestContainer(descriptor.name)
             var assigned = false

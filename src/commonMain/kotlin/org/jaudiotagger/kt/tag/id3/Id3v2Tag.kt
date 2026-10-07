@@ -2,7 +2,6 @@ package org.jaudiotagger.kt.tag.id3
 
 import org.jaudiotagger.kt.tag.Artwork
 import org.jaudiotagger.kt.tag.FieldKey
-import org.jaudiotagger.kt.tag.PictureTypes
 import org.jaudiotagger.kt.tag.Tag
 
 enum class Id3v2Version(val major: Int) {
@@ -31,10 +30,12 @@ class Id3v2Tag(val version: Id3v2Version) : Tag {
             ?: throw IllegalArgumentException("FieldKey $fieldKey is not supported by ID3${version.name}")
 
     private fun numberTotalFrame(frameId: String): Id3v2Frame.NumberTotal? {
-        val frame = frames.filterIsInstance<Id3v2Frame.NumberTotal>().firstOrNull { it.id == frameId }
+        val frame =
+            frames.filterIsInstance<Id3v2Frame.NumberTotal>().firstOrNull { it.id == frameId }
         if (frame != null) return frame
         // legacy: TRCK/TPOS read before NumberTotal support
-        val text = frames.filterIsInstance<Id3v2Frame.Text>().firstOrNull { it.id == frameId } ?: return null
+        val text = frames.filterIsInstance<Id3v2Frame.Text>().firstOrNull { it.id == frameId }
+            ?: return null
         val part = PartOfSetValue(text.values.firstOrNull() ?: "")
         val migrated = Id3v2Frame.NumberTotal(frameId, part)
         frames[frames.indexOf(text)] = migrated
@@ -68,7 +69,8 @@ class Id3v2Tag(val version: Id3v2Version) : Tag {
             frame is Id3v2Frame.Text -> return@mapNotNull null // handled below for multi-values
             else -> null
         }
-    } + frames.filterIsInstance<Id3v2Frame.Text>().filter { it.id == k.frameId }.flatMap { it.values }
+    } + frames.filterIsInstance<Id3v2Frame.Text>().filter { it.id == k.frameId }
+        .flatMap { it.values }
 
     override fun first(key: FieldKey): String? = all(key).firstOrNull()
 
@@ -99,10 +101,12 @@ class Id3v2Tag(val version: Id3v2Version) : Tag {
                 removeUserCommentFrames()
                 frames += Id3v2Frame.LanguageText(commentFrameId(), "eng", "", value)
             }
+
             key == FieldKey.LYRICS -> {
                 removeUserLyricsFrames()
                 frames += Id3v2Frame.LanguageText(lyricsFrameId(), "eng", "", value)
             }
+
             else -> {
                 remove(key)
                 add(key, value)
@@ -115,8 +119,10 @@ class Id3v2Tag(val version: Id3v2Version) : Tag {
             isNumberFieldKey(key) || isTotalFieldKey(key) -> setNumberTotal(key, value)
             key == FieldKey.COMMENT ->
                 frames += Id3v2Frame.LanguageText(commentFrameId(), "eng", "", value)
+
             key == FieldKey.LYRICS ->
                 frames += Id3v2Frame.LanguageText(lyricsFrameId(), "eng", "", value)
+
             else -> addField(key, value)
         }
     }
@@ -172,12 +178,42 @@ class Id3v2Tag(val version: Id3v2Version) : Tag {
 
     override fun remove(key: FieldKey) {
         when {
-            key == FieldKey.TRACK -> deleteNumberTotalFrame(key, FieldKey.TRACK_TOTAL, deleteNumber = true)
-            key == FieldKey.TRACK_TOTAL -> deleteNumberTotalFrame(key, FieldKey.TRACK, deleteNumber = false)
-            key == FieldKey.DISC_NO -> deleteNumberTotalFrame(key, FieldKey.DISC_TOTAL, deleteNumber = true)
-            key == FieldKey.DISC_TOTAL -> deleteNumberTotalFrame(key, FieldKey.DISC_NO, deleteNumber = false)
-            key == FieldKey.MOVEMENT_NO -> deleteNumberTotalFrame(key, FieldKey.MOVEMENT_TOTAL, deleteNumber = true)
-            key == FieldKey.MOVEMENT_TOTAL -> deleteNumberTotalFrame(key, FieldKey.MOVEMENT_NO, deleteNumber = false)
+            key == FieldKey.TRACK -> deleteNumberTotalFrame(
+                key,
+                FieldKey.TRACK_TOTAL,
+                deleteNumber = true
+            )
+
+            key == FieldKey.TRACK_TOTAL -> deleteNumberTotalFrame(
+                key,
+                FieldKey.TRACK,
+                deleteNumber = false
+            )
+
+            key == FieldKey.DISC_NO -> deleteNumberTotalFrame(
+                key,
+                FieldKey.DISC_TOTAL,
+                deleteNumber = true
+            )
+
+            key == FieldKey.DISC_TOTAL -> deleteNumberTotalFrame(
+                key,
+                FieldKey.DISC_NO,
+                deleteNumber = false
+            )
+
+            key == FieldKey.MOVEMENT_NO -> deleteNumberTotalFrame(
+                key,
+                FieldKey.MOVEMENT_TOTAL,
+                deleteNumber = true
+            )
+
+            key == FieldKey.MOVEMENT_TOTAL -> deleteNumberTotalFrame(
+                key,
+                FieldKey.MOVEMENT_NO,
+                deleteNumber = false
+            )
+
             key == FieldKey.COMMENT -> removeUserCommentFrames()
             key == FieldKey.LYRICS -> removeUserLyricsFrames()
             else -> {

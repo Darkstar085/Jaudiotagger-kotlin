@@ -1,9 +1,5 @@
 package org.jaudiotagger.kt.ogg
 
-import java.io.File
-import kotlin.test.Test
-import kotlin.test.assertEquals
-import kotlin.test.assertTrue
 import kotlinx.io.files.Path
 import kotlinx.io.files.SystemFileSystem
 import org.jaudiotagger.kt.AudioTagger
@@ -13,6 +9,10 @@ import org.jaudiotagger.kt.tag.FieldKey
 import org.jaudiotagger.kt.tag.vorbiscomment.VorbisCommentTag
 import org.jaudiotagger.kt.testDataPath
 import org.junit.Assume
+import java.io.File
+import kotlin.test.Test
+import kotlin.test.assertEquals
+import kotlin.test.assertTrue
 
 private const val FFMPEG_DECODE_COUNT = 144000L // ffmpeg decode count
 
@@ -76,7 +76,8 @@ class OpusFfmpegCrossCheckTest {
     private fun assumeFfprobeAvailable() {
         Assume.assumeTrue(
             try {
-                val process = ProcessBuilder("ffprobe", "-version").redirectErrorStream(true).start()
+                val process =
+                    ProcessBuilder("ffprobe", "-version").redirectErrorStream(true).start()
                 process.inputStream.readBytes()
                 process.waitFor() == 0
             } catch (_: Exception) {

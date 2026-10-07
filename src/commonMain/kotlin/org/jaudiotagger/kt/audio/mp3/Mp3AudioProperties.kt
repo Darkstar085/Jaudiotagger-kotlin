@@ -1,7 +1,7 @@
 package org.jaudiotagger.kt.audio.mp3
 
-import kotlin.time.Duration
 import org.jaudiotagger.kt.AudioProperties
+import kotlin.time.Duration
 
 class Mp3AudioProperties(
     encodingType: String,

@@ -1,10 +1,10 @@
 package org.jaudiotagger.kt.vorbiscomment
 
+import org.jaudiotagger.kt.tag.FieldKey
+import org.jaudiotagger.kt.tag.vorbiscomment.VorbisCommentTag
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
-import org.jaudiotagger.kt.tag.FieldKey
-import org.jaudiotagger.kt.tag.vorbiscomment.VorbisCommentTag
 
 class VorbisCommentNumberTotalTest {
 
@@ -93,7 +93,9 @@ class VorbisCommentNumberTotalTest {
         assertEquals("12", combined.first(FieldKey.TRACK_TOTAL))
         assertEquals(null, combined.firstRaw("TRACKNUMBER"))
         assertEquals("12", combined.firstRaw("TRACKTOTAL"))
-        assertEquals(listOf("TITLE", "ARTIST", "TRACKTOTAL"), combined.allFields.map { field -> field.id })
+        assertEquals(
+            listOf("TITLE", "ARTIST", "TRACKTOTAL"),
+            combined.allFields.map { field -> field.id })
 
         val separate = tag("TRACKNUMBER" to "3", "TRACKTOTAL" to "12")
         separate.remove(FieldKey.TRACK)

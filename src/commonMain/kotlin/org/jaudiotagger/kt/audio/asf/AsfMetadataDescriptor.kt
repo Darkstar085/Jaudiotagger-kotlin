@@ -19,8 +19,8 @@ internal class AsfMetadataDescriptor(
 ) {
     fun sameKey(other: AsfMetadataDescriptor): Boolean =
         name.equals(other.name, ignoreCase = true) &&
-            languageIndex == other.languageIndex &&
-            streamNumber == other.streamNumber
+                languageIndex == other.languageIndex &&
+                streamNumber == other.streamNumber
 
     fun asStringValue(): String? = when (valueType) {
         TYPE_STRING -> decodeUtf16Le(content, 0, content.size)
@@ -31,6 +31,7 @@ internal class AsfMetadataDescriptor(
             val high = content.readInt32LE(4).toLong()
             (low or (high shl 32)).toULong().toString()
         } else null
+
         TYPE_WORD -> if (content.size >= 2) content.readUInt16LE(0).toString() else null
         else -> null
     }
@@ -140,17 +141,20 @@ internal class AsfMetadataDescriptor(
         ): ByteArray = when (valueType) {
             TYPE_STRING -> {
                 val end = pos + length
-                val trimmed = if (end - pos >= 2 && data[end - 2] == 0.toByte() && data[end - 1] == 0.toByte()) {
-                    end - 2
-                } else {
-                    end
-                }
+                val trimmed =
+                    if (end - pos >= 2 && data[end - 2] == 0.toByte() && data[end - 1] == 0.toByte()) {
+                        end - 2
+                    } else {
+                        end
+                    }
                 data.copyOfRange(pos, trimmed)
             }
+
             TYPE_BOOLEAN -> {
                 val slice = data.copyOfRange(pos, pos + length)
                 byteArrayOf(if (slice.isNotEmpty() && slice[0] != 0.toByte()) 1 else 0)
             }
+
             else -> data.copyOfRange(pos, pos + length)
         }
 
@@ -158,7 +162,7 @@ internal class AsfMetadataDescriptor(
             val chars = CharArray((to - from) / 2)
             for (i in chars.indices) {
                 chars[i] = ((data[from + i * 2 + 1].toInt() and 0xFF shl 8) or
-                    (data[from + i * 2].toInt() and 0xFF)).toChar()
+                        (data[from + i * 2].toInt() and 0xFF)).toChar()
             }
             return chars.concatToString().trimEnd('\u0000')
         }

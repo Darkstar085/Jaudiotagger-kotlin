@@ -3,6 +3,7 @@ package org.jaudiotagger.kt.audio.ogg
 import kotlinx.io.Buffer
 import kotlinx.io.readByteArray
 import org.jaudiotagger.kt.CannotWriteException
+import org.jaudiotagger.kt.audio.ogg.OggOpusTagWriter.MINIMUM_PADDING
 import org.jaudiotagger.kt.io.FileIo
 import org.jaudiotagger.kt.io.u
 import org.jaudiotagger.kt.tag.vorbiscomment.VorbisCommentCodec
@@ -44,7 +45,8 @@ internal object OggOpusTagWriter {
         buffer.write(comments)
 
         val oldListEnd = VorbisCommentCodec.commentListEnd(oldCommentData) ?: oldCommentData.size
-        val hasBinaryData = oldListEnd < oldCommentData.size && (u(oldCommentData[oldListEnd]) and 0x01) == 1
+        val hasBinaryData =
+            oldListEnd < oldCommentData.size && (u(oldCommentData[oldListEnd]) and 0x01) == 1
         if (hasBinaryData) {
             buffer.write(oldCommentData, oldListEnd, oldCommentData.size)
             return buffer.readByteArray()
@@ -52,7 +54,10 @@ internal object OggOpusTagWriter {
 
         val unpaddedLength = OpusHeader.CAPTURE_PATTERN_LENGTH + comments.size
         val oldPacketLength = OpusHeader.CAPTURE_PATTERN_LENGTH + oldCommentData.size
-        val packetLength = if (unpaddedLength <= oldPacketLength) oldPacketLength else paddedPacketLength(unpaddedLength)
+        val packetLength =
+            if (unpaddedLength <= oldPacketLength) oldPacketLength else paddedPacketLength(
+                unpaddedLength
+            )
         buffer.write(ByteArray(packetLength - unpaddedLength))
         return buffer.readByteArray()
     }
@@ -67,12 +72,18 @@ internal object OggOpusTagWriter {
      * Full pages first, then a final page that completes the packet. The final page holds a
      * single zero lacing value when the packet is an exact multiple of the page size.
      */
-    private fun buildHeaderPages(template: OggPageHeader, packet: ByteArray): OggPageWriter.HeaderPages {
+    private fun buildHeaderPages(
+        template: OggPageHeader,
+        packet: ByteArray
+    ): OggPageWriter.HeaderPages {
         val out = Buffer()
         val fullPages = packet.size / OggPageHeader.MAXIMUM_PAGE_DATA_SIZE
         for (i in 0 until fullPages) {
             val start = i * OggPageHeader.MAXIMUM_PAGE_DATA_SIZE
-            val segmentTable = OggPageWriter.createSegments(OggPageHeader.MAXIMUM_PAGE_DATA_SIZE, quitStream = false)
+            val segmentTable = OggPageWriter.createSegments(
+                OggPageHeader.MAXIMUM_PAGE_DATA_SIZE,
+                quitStream = false
+            )
             val page = OggPageWriter.buildPage(
                 template,
                 segmentTable,
@@ -86,7 +97,8 @@ internal object OggOpusTagWriter {
         }
 
         val lastStart = fullPages * OggPageHeader.MAXIMUM_PAGE_DATA_SIZE
-        val lastSegmentTable = OggPageWriter.createSegments(packet.size - lastStart, quitStream = true)
+        val lastSegmentTable =
+            OggPageWriter.createSegments(packet.size - lastStart, quitStream = true)
         val lastPage = OggPageWriter.buildPage(
             template,
             lastSegmentTable,

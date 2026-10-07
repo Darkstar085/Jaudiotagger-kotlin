@@ -1,12 +1,12 @@
 package org.jaudiotagger.kt.real
 
-import kotlin.test.Test
-import kotlin.test.assertEquals
-import kotlin.test.assertFailsWith
 import org.jaudiotagger.kt.AudioTagger
 import org.jaudiotagger.kt.CannotWriteException
 import org.jaudiotagger.kt.tag.FieldKey
 import org.jaudiotagger.kt.testDataPath
+import kotlin.test.Test
+import kotlin.test.assertEquals
+import kotlin.test.assertFailsWith
 
 class RealReadTest {
 

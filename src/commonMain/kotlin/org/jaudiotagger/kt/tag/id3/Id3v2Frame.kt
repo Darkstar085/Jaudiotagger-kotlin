@@ -59,7 +59,8 @@ sealed class Id3v2Frame(val id: String) {
     }
 
     /** POPM popularimeter. */
-    class Popularimeter(id: String, val email: String, val rating: Int, val counter: Long) : Id3v2Frame(id) {
+    class Popularimeter(id: String, val email: String, val rating: Int, val counter: Long) :
+        Id3v2Frame(id) {
         override fun toString(): String = "$id[$email]=$rating"
     }
 

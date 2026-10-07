@@ -1,11 +1,11 @@
 package org.jaudiotagger.kt.audio.ogg
 
-import kotlin.time.Duration.Companion.seconds
 import org.jaudiotagger.kt.AudioProperties
 import org.jaudiotagger.kt.CannotReadException
 import org.jaudiotagger.kt.audio.id3.Id3v2Detector
 import org.jaudiotagger.kt.io.FileIo
 import org.jaudiotagger.kt.io.readFully
+import kotlin.time.Duration.Companion.seconds
 
 /**
  * Reads audio properties from an Ogg Vorbis stream: the identification header

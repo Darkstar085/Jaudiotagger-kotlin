@@ -25,9 +25,10 @@ class ShiftDataTest {
     fun shrinkAtEndTruncatesFile() {
         val file = java.io.File.createTempFile("shiftdata-shrink", ".bin")
         tempFile = file
-        FileChannel.open(file.toPath(), StandardOpenOption.READ, StandardOpenOption.WRITE).use { channel ->
-            channel.write(ByteBuffer.wrap(ByteArray(FILE_SIZE) { i -> patternByte(i) }))
-        }
+        FileChannel.open(file.toPath(), StandardOpenOption.READ, StandardOpenOption.WRITE)
+            .use { channel ->
+                channel.write(ByteBuffer.wrap(ByteArray(FILE_SIZE) { i -> patternByte(i) }))
+            }
         val shrinkBy = 1234
         FileChannelIo(
             FileChannel.open(file.toPath(), StandardOpenOption.READ, StandardOpenOption.WRITE),

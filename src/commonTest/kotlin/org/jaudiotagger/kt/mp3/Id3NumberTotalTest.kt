@@ -1,9 +1,5 @@
 package org.jaudiotagger.kt.mp3
 
-import kotlin.test.Test
-import kotlin.test.assertEquals
-import kotlin.test.assertIs
-import kotlin.test.assertNull
 import kotlinx.io.files.SystemFileSystem
 import org.jaudiotagger.kt.AudioTagger
 import org.jaudiotagger.kt.copyToTemp
@@ -12,6 +8,10 @@ import org.jaudiotagger.kt.tag.id3.Id3v2Frame
 import org.jaudiotagger.kt.tag.id3.Id3v2Tag
 import org.jaudiotagger.kt.tag.id3.Id3v2Version
 import org.jaudiotagger.kt.tag.id3.PartOfSetValue
+import kotlin.test.Test
+import kotlin.test.assertEquals
+import kotlin.test.assertIs
+import kotlin.test.assertNull
 
 class Id3NumberTotalTest {
 
@@ -34,7 +34,10 @@ class Id3NumberTotalTest {
 
     @Test
     fun writePreservesTotalWhenSettingTrackAlone() {
-        for (sample in listOf("issue52.mp3" to Id3v2Version.V23, "test23.mp3" to Id3v2Version.V24)) {
+        for (sample in listOf(
+            "issue52.mp3" to Id3v2Version.V23,
+            "test23.mp3" to Id3v2Version.V24
+        )) {
             val path = copyToTemp(sample.first, "trck-write-${sample.second.name}")
             val tag = assertIs<Id3v2Tag>(AudioTagger.read(path).tag)
             tag.set(FieldKey.TRACK, "3")

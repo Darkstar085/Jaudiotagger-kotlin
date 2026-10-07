@@ -1,8 +1,8 @@
 package org.jaudiotagger.kt.audio.flac
 
-import kotlin.time.Duration.Companion.seconds
 import org.jaudiotagger.kt.CannotReadException
 import org.jaudiotagger.kt.io.FileIo
+import kotlin.time.Duration.Companion.seconds
 
 /**
  * Reads audio properties from the STREAMINFO block.
