@@ -1,6 +1,7 @@
 # Jaudiotagger Kotlin
 
-**Kotlin Multiplatform audio metadata library** for reading, editing, and writing audio tags across Android, JVM, iOS, and macOS.
+**Kotlin Multiplatform audio metadata library** for reading, editing, and writing audio tags across
+Android, JVM, iOS, and macOS.
 
 [![Kotlin](https://img.shields.io/badge/Kotlin-Multiplatform-7F52FF?logo=kotlin&logoColor=white)](https://kotlinlang.org/)
 [![Maven Central](https://img.shields.io/maven-central/v/io.github.darkstar085/jaudiotagger-kt)](https://central.sonatype.com/artifact/io.github.darkstar085/jaudiotagger-kt)
@@ -67,23 +68,26 @@ The typical workflow is:
 
 Android-specific file access is separated from the shared metadata implementation.
 
-`FileDescriptorIo` allows metadata operations on files accessed through Android file descriptors, making the library suitable for **MediaStore** and **Storage Access Framework (SAF)** based applications.
+`FileDescriptorIo` allows metadata operations on files accessed through Android file descriptors,
+making the library suitable for **MediaStore** and **Storage Access Framework (SAF)** based
+applications.
 
 Android supports **API 21+**.
 
 ## 🌍 Supported Platforms
 
-| Platform | Support |
-| --- | :---: |
-| Android | ✅ |
-| JVM | ✅ |
-| iOS | ✅ |
-| iOS Simulator | ✅ |
-| macOS ARM64 | ✅ |
+| Platform      | Support |
+|---------------|:-------:|
+| Android       |   ✅    |
+| JVM           |   ✅    |
+| iOS           |   ✅    |
+| iOS Simulator |   ✅    |
+| macOS ARM64   |   ✅    |
 
 ## 🎧 Supported Formats
 
-MP3 · FLAC · Ogg Vorbis · Ogg Opus · MP4/M4A · WAV · AIFF · WMA/ASF · APE · WavPack · DSF · DFF · RealAudio
+MP3 · FLAC · Ogg Vorbis · Ogg Opus · MP4/M4A · WAV · AIFF · WMA/ASF · APE · WavPack · DSF · DFF ·
+RealAudio
 
 ## 🛠️ Build & Test
 
@@ -106,7 +110,8 @@ Maven coordinates:
 io.github.darkstar085:jaudiotagger-kt:<version>
 ```
 
-Releases are published to **Maven Central**, with the Android AAR also available as a [GitHub Release asset](https://github.com/Darkstar085/Jaudiotagger-kotlin/releases).
+Releases are published to **Maven Central**, with the Android AAR also available as
+a [GitHub Release asset](https://github.com/Darkstar085/Jaudiotagger-kotlin/releases).
 
 ## 📄 License
 
