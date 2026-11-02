@@ -29,6 +29,7 @@ enum class ApeFieldKey(val fieldName: String, val isCommon: Boolean) {
     ARRANGER_SORT("Arranger Sort", false),
     COMPILATION("Compilation", false),
     COMPOSER("Composer", false),
+    MUSICBRAINZ_COMPOSERID("Musicbrainz_Composerid", false),
     COMPOSER_SORT("Composer Sort", false),
     CONDUCTOR("Conductor", false),
     CONDUCTOR_SORT("Conductor Sort", false),
