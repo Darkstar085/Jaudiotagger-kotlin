@@ -80,6 +80,7 @@ enum class VorbisCommentFieldKey(val fieldName: String) {
     IS_HD("IS_HD"),
     IS_LIVE("LIVE"),
     IS_SOUNDTRACK("IS_SOUNDTRACK"),
+    IS_COMPLETE_RELEASE_MATCH("IS_COMPLETE_RELEASE_MATCH"),
     JAIKOZ_ID("JAIKOZ_ID"),
     KEY("KEY"),
     LABEL("LABEL"),

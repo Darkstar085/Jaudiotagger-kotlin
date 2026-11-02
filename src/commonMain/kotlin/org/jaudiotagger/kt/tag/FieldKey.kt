@@ -73,6 +73,7 @@ enum class FieldKey {
     IS_LIVE,
     IS_SOUNDTRACK,
     IS_COMPILATION,
+    IS_COMPLETE_RELEASE_MATCH,
     ITUNES_GROUPING,
     JAIKOZ_ID,
     KEY,
