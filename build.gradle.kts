@@ -72,7 +72,7 @@ kotlin {
             api("org.jetbrains.kotlinx:kotlinx-io-core:0.9.1")
         }
         commonTest.dependencies { implementation(kotlin("test")) }
-        val androidDeviceTest by getting {
+        getByName("androidDeviceTest") {
             dependencies {
                 implementation(kotlin("test-junit"))
                 implementation("androidx.test:runner:1.7.0")
