@@ -16,7 +16,7 @@ internal object WavPackInfoReader {
 
     private const val HEADER_SIZE = 32
     private const val META_ID_WV_BITSTREAM = 0x0A
-    private const val META_ID_CHANNEL_INFO = 0x1D
+    private const val META_ID_CHANNEL_INFO = 0x0D
     private const val META_ID_SAMPLE_RATE = 0x27
 
     private val SAMPLE_RATES = intArrayOf(
@@ -139,13 +139,17 @@ internal object WavPackInfoReader {
 
     private fun parseChannelCount(data: ByteArray): Int {
         if (data.isEmpty()) return 0
-        var candidate = 0
-        if (data.size >= 2) {
-            candidate = u(data[0]) or (u(data[1]) shl 8)
-            if (candidate <= 0 || candidate > 32) candidate = 0
+
+        // WavPack CHANNEL_INFO (0x0D) stores the channel count in the first
+        // byte for small blocks. Extended blocks store channel/stream details;
+        // the channel count is the first byte plus the low four bits of byte 2,
+        // then offset by one.
+        val channels = if (data.size >= 6) {
+            (u(data[0]) or ((u(data[2]) and 0x0F) shl 8)) + 1
+        } else {
+            u(data[0])
         }
-        if (candidate == 0) candidate = u(data[0])
-        return if (candidate in 1..32) candidate else 0
+        return channels.takeIf { it in 1..32 } ?: 0
     }
 
     private class BlockHeader(

@@ -74,7 +74,7 @@ class ApeTagFooter(
  */
 object ApeTagCodec {
 
-    private const val FLAG_TYPE_BINARY = 0x1
+    private const val FLAG_TYPE_BINARY = 0x2
 
     /** Parses items from the tag data area (between header and footer). */
     fun decodeItems(data: ByteArray): ApeTag {

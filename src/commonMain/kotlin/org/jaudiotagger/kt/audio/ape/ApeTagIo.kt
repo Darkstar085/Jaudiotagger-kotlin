@@ -18,6 +18,8 @@ internal object ApeTagIo {
     private const val ID3V1_LENGTH = 128
     private val LYRICS_MARKER = "LYRICS200".encodeToByteArray()
     private const val LYRICS_SIZE_LENGTH = 6
+    private const val MAX_TRAILING_SCAN = 64L * 1024 * 1024
+    private const val MIN_ITEM_SIZE = 11
 
     class TagLocation(
         val dataStart: Long,
@@ -106,21 +108,35 @@ internal object ApeTagIo {
     private fun locateTrailingTag(io: FileIo, limit: Long): TagLocation? {
         if (limit < ApeTagFooter.FOOTER_SIZE) return null
 
-        // normal case first: footer sits right at the limit
-        val candidate = limit - ApeTagFooter.FOOTER_SIZE
-        io.position = candidate
-        val footer = ApeTagFooter.parse(io.readFully(ApeTagFooter.FOOTER_SIZE))
-        if (footer == null || !footer.isValid || footer.isHeader) {
-            return null
+        // Tags normally end at the metadata boundary, but valid files may have
+        // padding between the APE tag and Lyrics3/ID3v1 metadata.
+        val scanStart = maxOf(0L, limit - MAX_TRAILING_SCAN)
+        var candidate = limit - ApeTagFooter.FOOTER_SIZE
+        while (candidate >= scanStart) {
+            io.position = candidate
+            val footer = ApeTagFooter.parse(io.readFully(ApeTagFooter.FOOTER_SIZE))
+            if (footer != null && footer.isValid && !footer.isHeader && footer.hasFooter) {
+                val dataLength = footer.size - ApeTagFooter.FOOTER_SIZE
+                val dataStart = footer.calculateTagStart(candidate)
+                val headerOffset = if (footer.hasHeader) dataStart - ApeTagFooter.FOOTER_SIZE else -1L
+                val removalStart = if (footer.hasHeader) headerOffset else dataStart
+                val itemBoundsValid = dataLength >= 0 &&
+                    footer.itemCount.toLong() <= dataLength.toLong() / MIN_ITEM_SIZE
+                var matchingHeader = true
+                if (footer.hasHeader && headerOffset >= 0) {
+                    io.position = headerOffset
+                    val header = ApeTagFooter.parse(io.readFully(ApeTagFooter.FOOTER_SIZE))
+                    matchingHeader = header != null && header.isValid && header.isHeader &&
+                        header.version == footer.version && header.size == footer.size &&
+                        header.itemCount == footer.itemCount
+                }
+                if (dataStart >= 0 && removalStart >= 0 && itemBoundsValid && matchingHeader) {
+                    return TagLocation(dataStart, candidate, headerOffset, candidate, isAtStart = false)
+                }
+            }
+            candidate--
         }
-        // footer.size covers items + footer but never the optional 32-byte header,
-        // so the items always start at footerOffset - (size - 32)
-        val dataLength = footer.size - ApeTagFooter.FOOTER_SIZE
-        val dataStart = footer.calculateTagStart(candidate)
-        if (dataLength < 0 || dataStart < 0) return null
-        val headerOffset = if (footer.hasHeader) dataStart - ApeTagFooter.FOOTER_SIZE else -1L
-        if (footer.hasHeader && headerOffset < 0) return null
-        return TagLocation(dataStart, candidate, headerOffset, candidate, isAtStart = false)
+        return null
     }
 
     /** APEv2 also allows a tag at the very start of the file (before the audio). */
