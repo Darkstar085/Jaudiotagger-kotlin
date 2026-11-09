@@ -9,7 +9,7 @@ plugins {
 }
 
 group = "io.github.darkstar085"
-version = "1.0.0"
+version = "1.0.1"
 
 signing {
     val signingKey = providers.environmentVariable("SIGNING_KEY").orNull

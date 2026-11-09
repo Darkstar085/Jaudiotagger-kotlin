@@ -26,7 +26,7 @@ Jaudiotagger Kotlin is available from Maven Central.
 
 ```kotlin
 dependencies {
-    implementation("io.github.darkstar085:jaudiotagger-kt:1.0.0")
+    implementation("io.github.darkstar085:jaudiotagger-kt:1.0.1")
 }
 ```
 
@@ -36,7 +36,7 @@ For Kotlin Multiplatform:
 kotlin {
     sourceSets {
         commonMain.dependencies {
-            implementation("io.github.darkstar085:jaudiotagger-kt:1.0.0")
+            implementation("io.github.darkstar085:jaudiotagger-kt:1.0.1")
         }
     }
 }
